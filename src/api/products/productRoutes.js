@@ -8,6 +8,8 @@ import { ORIGIN_URL } from "../environment"
 @param {string=} params.sections - "MEN" | "WOMEN"
 @param {Number=} params.page - pagination page number.
 @param {Number=} params.limit - Product x page limit.
+@param {Number=} params.min_price - Minimum price of products to return
+@param {Number=} params.max_price - Maximum price of products to return
 */
 export const getProducts = async (params) => {
     try
