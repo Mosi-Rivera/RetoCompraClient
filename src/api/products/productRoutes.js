@@ -5,7 +5,7 @@ import { ORIGIN_URL } from "../environment"
 @param {String=} params.sort - "new" | "popular" | "high" | "low"
 @param {String=} params.color - Product color.
 @param {String=} params.brand - Product brand.
-@param {string=} params.sections - "MEN" | "WOMEN"
+@param {string=} params.section - "MEN" | "WOMEN"
 @param {Number=} params.page - pagination page number.
 @param {Number=} params.limit - Product x page limit.
 @param {Number=} params.min_price - Minimum price of products to return
