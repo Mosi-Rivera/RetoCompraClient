@@ -1,5 +1,4 @@
-// FilterSidebar.js
-import React, { useState } from 'react';
+import React from 'react';
 import Grid from '@mui/material/Grid';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
@@ -46,11 +45,11 @@ const FilterSidebar = ({ filter_state, setFilterState }) => {
                 size='medium'
                 style={{ border: 'none' }}
               >
-                <MenuItem value="xs">XS</MenuItem>
-                <MenuItem value="s">S</MenuItem>
-                <MenuItem value="m">M</MenuItem>
-                <MenuItem value="l">L</MenuItem>
-                <MenuItem value="xl">XL</MenuItem>
+                <MenuItem value="XS">XS</MenuItem>
+                <MenuItem value="S">S</MenuItem>
+                <MenuItem value="M">M</MenuItem>
+                <MenuItem value="L">L</MenuItem>
+                <MenuItem value="XL">XL</MenuItem>
               </Select>
             </FormControl>
 
@@ -68,9 +67,6 @@ const FilterSidebar = ({ filter_state, setFilterState }) => {
               >
                 <MenuItem value="black">Black</MenuItem>
                 <MenuItem value="white">White</MenuItem>
-                <MenuItem value="primary">Primary</MenuItem>
-                <MenuItem value="secondary">Secondary</MenuItem>
-                {/* Add more color options as needed */}
               </Select>
             </FormControl>
 
