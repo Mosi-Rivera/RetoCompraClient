@@ -1,4 +1,6 @@
 import React from 'react';
+import MyForm from './components/MyForm';
+
 import { HashRouter, Routes, Route, Outlet, NavLink } from "react-router-dom";
 import SignIn from './pages/SignIn';
 // import Home from './pages/Home';
@@ -17,6 +19,7 @@ function App() {
             loader={loader}
             path="/" element={<Home />}></Route> */}
           <Route path='/signin' element={<SignIn />}></Route>
+          <Route path='/register' element={<MyForm/>}></Route>
         </Routes>
       </HashRouter>
 
