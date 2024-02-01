@@ -71,9 +71,10 @@ const DisplayProducts = ({fetchMethod, filter = false, pagination = false, defau
                     <CircularProgress color="inherit" />
                 </Backdrop>
             }
-            <ProductsList products={products} />
+            <ProductsList products={products}/>
             {
                 pagination && <Pagination
+                data-testId='pagination'
                 count={max_pages}
                 page={page}
                 onChange={(_, value) => setPage(value)}

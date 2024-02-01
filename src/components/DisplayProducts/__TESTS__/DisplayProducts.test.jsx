@@ -2,7 +2,6 @@ import react from 'react'
 import {render, screen} from '@testing-library/react';
 import { beforeEach, expect } from 'vitest';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ProductFilters from '../ProductFilters';
 import DisplayProducts from '../DisplayProducts';
 const products = (({brands, names}, amount) => {
     const result = [];
@@ -36,16 +35,30 @@ describe("Product Component", () => {
               <Route path='/' element={<DisplayProducts fetchMethod={fetchProducts}/>}/>
             </Routes>
           </BrowserRouter>);
-        expect(screen.getByTestId('product-filters')).toBeDefined();
+        expect(screen.getByTestId('display-products')).toBeDefined();
     });
-    test("Should render inputs.", () => {
+    test("Should display products list.", () => {
       render(<BrowserRouter>
         <Routes>
-          <Route path='/' element={<DisplayProducts/>}/>
+          <Route path='/' element={<DisplayProducts fetchMethod={fetchProducts}/>}/>
         </Routes>
       </BrowserRouter>);
-        expect(screen.getByTestId('size-select')).toBeDefined();
-        expect(screen.getByTestId('color-select')).toBeDefined();
-        expect(screen.getByTestId('sort-select')).toBeDefined();
+        expect(screen.getByTestId('products-container')).toBeDefined();
+    });
+    test("Should render filter when attribute is set.", () => {
+      render(<BrowserRouter>
+        <Routes>
+          <Route path='/' element={<DisplayProducts fetchMethod={fetchProducts} filter/>}/>
+        </Routes>
+      </BrowserRouter>);
+        expect(screen.getByTestId('product-filters')).toBeDefined();
+    });
+    test("Should render pagination when attribute is set.", () => {
+      render(<BrowserRouter>
+        <Routes>
+          <Route path='/' element={<DisplayProducts fetchMethod={fetchProducts} pagination/>}/>
+        </Routes>
+      </BrowserRouter>);
+        expect(screen.getByTestId('pagination')).toBeDefined();
     });
 });
