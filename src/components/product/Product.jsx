@@ -33,12 +33,13 @@ const ProductContent = styled(Box)({
 });
 
 const Product = ({ product }) => {
+  console.log(product)
   const { assets, name, brand, price, _id } = product;
   const thumbnail = assets && assets.thumbnail ? assets.thumbnail : '';
 
   return (<NavLink to={`/product/${_id}`}>
-        <ProductContainer>
-            <ProductImage thumbnail={thumbnail} />
+        <ProductContainer data-testId='product-container'>
+            <ProductImage data-testId='product-image' thumbnail={thumbnail} />
             <ProductContent>
                 <Typography variant="subtitle2" color="textSecondary">
                 {brand}
