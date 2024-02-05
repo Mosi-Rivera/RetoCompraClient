@@ -1,17 +1,15 @@
 export const SIGN_IN = async (userInfo) => {
-    try {
-        const response = await fetch("http://localhost:4800/login", {
-            method: "POST",
-            credentials: "include",
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userInfo)
-        })
-        const result = await response.json();
-        console.log(result)
-    } catch (error) {
-        console.log("Error ", error)
+    const response = await fetch("http://localhost:4800/signin", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userInfo)
+    })
+    if (response.ok) {
+        // response.json() will return a json of all the products on the server side
+        return response.json();
+    } else {
+        return Promise.reject(response);
     }
 }

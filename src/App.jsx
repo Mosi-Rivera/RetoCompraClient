@@ -18,8 +18,8 @@ function App() {
           {/* <Route
             loader={loader}
             path="/" element={<Home />}></Route> */}
-          <Route path='/login' element={<SignIn />}></Route>
-          <Route path='/register' element={<MyForm />}></Route>
+          <Route path='/signin' element={<SignIn />}></Route>
+          <Route path='/register' element={<MyForm/>}></Route>
         </Routes>
       </HashRouter>
 
