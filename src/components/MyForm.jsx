@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { registerForm} from "../api/authRoutes"
+import "../styles/Myform.css"
 
 const MyForm = () => {
   const [formData, setFormData] = useState({
@@ -6,7 +8,7 @@ const MyForm = () => {
     last_name: '',
     email: '',
     password: '',
-    confirm_password: ''
+    confirmPassword: ''
   });
   const [errorMessage, setErrorMessage] = useState({
     error: undefined
@@ -16,20 +18,26 @@ const MyForm = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
   const password = formData.password;
-  const confirm_password = formData.confirm_password;
+  const confirm_password = formData.confirmPassword;
 
-    if (password !== confirm_password)
+      if (password !== confirm_password)
     { 
       setErrorMessage ( {error: "Confirm password does not match"});
       console.log(password,confirm_password)
       return; 
-    
+  
     }
 
+    try {
+      const user = await registerForm(formData);
+      console.log(user)
+  } catch (error) {
+      console.log(error)
+    }
 
     // Add logic to handle form submission
     console.log('Form submitted:', formData);
@@ -54,20 +62,20 @@ const MyForm = () => {
       <br />
       <label>
         Password:
-        <input type="password" name="password" value={formData.password} onChange={handleChange} pattern=" ($10<)(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
-        title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" />
+        <input type="password" name="password" value={formData.password} onChange={handleChange} pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$" 
+        title="Must contain at least one number and one uppercase and lowercase letter, and at least 5 or more characters" />
       </label>
       <br />
       <label>
         Confirm password:
-        <input type="password" name="confirm_password" value={formData.confirm_password} onChange={handleChange} />
+        <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
       </label>
       <br />
       {errorMessage.error &&  
         <span>{errorMessage.error}
         </span> }
         <br />
-      <button type="submit">Submit</button>
+      <button type="submit">Register</button>
     </form>
   );
 };

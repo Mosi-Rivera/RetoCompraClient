@@ -125,6 +125,7 @@ export default function Header(props) {
                         <nav>
                             <NavLink className="nav-links" to="/">Home</NavLink>
                             <NavLink className="nav-links" to="/signin">Sign In</NavLink>
+                            <NavLink className="nav-links" to="/register">Register</NavLink>
                         </nav >
                         <div>
                             <Outlet />
