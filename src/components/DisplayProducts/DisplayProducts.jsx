@@ -6,23 +6,23 @@ import { useEffect, useState } from "react";
 import { Backdrop, CircularProgress } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 
-const DisplayProducts = ({fetchMethod, filter = false, pagination = false, default_sort = '', default_limit = 24, loading_backdrop = false}) => {
-    const [search_params, setSearchParams] = useSearchParams();
-    const page = parseInt(search_params.get('page')) || 1;
-    const limit = parseInt(search_params.get('limit')) || default_limit;
-    const [max_pages, setMaxPages] = useState(0);
+const DisplayProducts = ({fetchMethod, filter = false, pagination = false, defaultSort = '', defaultLimit = 24, loadingBackdrop = false}) => {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const page = parseInt(searchParams.get('page')) || 1;
+    const limit = parseInt(searchParams.get('limit')) || defaultLimit;
+    const [maxPages, setMaxPages] = useState(0);
     const [products, setProducts] = useState(null);
-    const [is_loading, setIsLoading] = useState(false);
-    const [backdrop_open, setBackdropOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [backdropOpen, setBackdropOpen] = useState(false);
     const handleFetch = async () => {
         try
         {
             setIsLoading(true);
-            const options = Object.fromEntries(search_params.entries());
+            const options = Object.fromEntries(searchParams.entries());
             options.limit = limit;
             options.page = page;
-            const {products: _products, pages} = await fetchMethod(options);
-            setProducts(_products);
+            const {products: newProducts, pages} = await fetchMethod(options);
+            setProducts(newProducts);
             setMaxPages(pages);
         }
         catch(err)
@@ -36,13 +36,13 @@ const DisplayProducts = ({fetchMethod, filter = false, pagination = false, defau
     }
     const setPage = (page) => {
         setSearchParams((sp) => {
-            const current_params = Object.fromEntries(sp.entries());
-            current_params.page = page;
-            return current_params;
+            const currentParams = Object.fromEntries(sp.entries());
+            currentParams.page = page;
+            return currentParams;
         });
     }
     useEffect(() => {
-        if (is_loading)
+        if (isLoading)
             setBackdropOpen(true);
         else
         setTimeout(() => {
@@ -52,20 +52,20 @@ const DisplayProducts = ({fetchMethod, filter = false, pagination = false, defau
             });
             setBackdropOpen(false);
         }, 100);
-    }, [is_loading]);
+    }, [isLoading]);
     useEffect(
         () => {
             handleFetch();
         },
-        [search_params]
+        [searchParams]
     );
     return (
         <Container data-testId='display-products'>
-            { filter && <ProductFilters default_sort={default_sort}/> }
+            { filter && <ProductFilters defaultSort={defaultSort}/> }
             {
-                loading_backdrop && <Backdrop
+                loadingBackdrop && <Backdrop
                     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                    open={backdrop_open}
+                    open={backdropOpen}
                     // onClick={handleClose}
                 >
                     <CircularProgress color="inherit" />
@@ -75,7 +75,7 @@ const DisplayProducts = ({fetchMethod, filter = false, pagination = false, defau
             {
                 pagination && <Pagination
                 data-testId='pagination'
-                count={max_pages}
+                count={maxPages}
                 page={page}
                 onChange={(_, value) => setPage(value)}
                 color="primary"

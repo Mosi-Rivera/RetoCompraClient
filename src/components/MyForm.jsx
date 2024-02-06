@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 
 const MyForm = () => {
   const [formData, setFormData] = useState({
-    first_name: '', 
-    last_name: '',
+    firstName: '', 
+    lastName: '',
     email: '',
     password: '',
-    confirm_password: ''
+    confirmPassword: ''
   });
   const [errorMessage, setErrorMessage] = useState({
     error: undefined
@@ -20,12 +20,12 @@ const MyForm = () => {
     e.preventDefault();
 
   const password = formData.password;
-  const confirm_password = formData.confirm_password;
+  const confirmPassword = formData.confirmPassword;
 
-    if (password !== confirm_password)
+    if (password !== confirmPassword)
     { 
       setErrorMessage ( {error: "Confirm password does not match"});
-      console.log(password,confirm_password)
+      console.log(password,confirmPassword)
       return; 
     
     }
@@ -39,12 +39,12 @@ const MyForm = () => {
     <form onSubmit={handleSubmit}>
       <label>
         First Name:
-        <input type="text" name="first_name" value={formData.first_name} onChange={handleChange} />
+        <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} />
       </label>
       <br />
       <label>
         Last Name:
-        <input type="text" name="last_name" value={formData.last_name} onChange={handleChange} />
+        <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} />
       </label>
       <br />
       <label>
@@ -60,7 +60,7 @@ const MyForm = () => {
       <br />
       <label>
         Confirm password:
-        <input type="password" name="confirm_password" value={formData.confirm_password} onChange={handleChange} />
+        <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
       </label>
       <br />
       {errorMessage.error &&  

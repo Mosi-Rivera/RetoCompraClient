@@ -5,7 +5,7 @@ import { beforeEach, expect } from 'vitest';
 
 describe("Form Modal Component", () => {
     const attrs = {
-        button_text: "register",
+        buttonText: "register",
         title: "REGISTER"
     };
     const Element = ({attrs}) => {
@@ -28,7 +28,7 @@ describe("Form Modal Component", () => {
     beforeEach(() => render(<Element attrs={attrs}/>));
 
     test("Should render button text.", () => {
-        expect(screen.getByText(attrs.button_text)).toBeDefined();
+        expect(screen.getByText(attrs.buttonText)).toBeDefined();
     });
     test("Should not render modal by default.", () => {
         expect(screen.queryByTestId("modal")).toBeNull();

@@ -8,19 +8,19 @@ describe("Get products", () => {
     test("Should sort.", async () => {
         const products = await getProducts({sort: "high"});
         expect(products).not.toBeNull();
-        let last_price = null;
+        let lastPrice = null;
         for (const {price} of products)
         {
-            if (!last_price) last_price = price;
-            expect(price).toBeLessThanOrEqual(last_price);
+            if (!lastPrice) lastPrice = price;
+            expect(price).toBeLessThanOrEqual(lastPrice);
         }
     });
     test("Should search by field.", async () => {
         const brand = "NIKE";
         const products = await getProducts({brand});
         expect(products).not.toBeNull();
-        for (const {brand: product_brand} of products)
-            expect(product_brand).toBe(brand);
+        for (const {brand: productBrand} of products)
+            expect(productBrand).toBe(brand);
     });
     test("Should return page limit or less documents", async () => {
         const limit = 3;

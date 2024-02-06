@@ -8,14 +8,14 @@ import { ORIGIN_URL } from "../environment"
 @param {string=} params.section - "MEN" | "WOMEN"
 @param {Number=} params.page - pagination page number.
 @param {Number=} params.limit - Product x page limit.
-@param {Number=} params.min_price - Minimum price of products to return
-@param {Number=} params.max_price - Maximum price of products to return
+@param {Number=} params.minPrice - Minimum price of products to return
+@param {Number=} params.maxPrice - Maximum price of products to return
 */
 export const getProducts = async (params) => {
     try
     {
-        const query_str = '?' + (new URLSearchParams(params)).toString();
-        const response = await fetch(ORIGIN_URL + '/api/products' + query_str);
+        const queryStr = '?' + (new URLSearchParams(params)).toString();
+        const response = await fetch(ORIGIN_URL + '/api/products' + queryStr);
         if (response.ok)
             return response.json();
         else

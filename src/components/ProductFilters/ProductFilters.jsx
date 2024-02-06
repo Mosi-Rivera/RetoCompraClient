@@ -6,7 +6,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Chip from '@mui/material/Chip';
 import { useSearchParams } from 'react-router-dom';
-const colors = (_colors => _colors.map(_color => ({name: _color.charAt(0).toUpperCase() + _color.slice(1), value: _color.toUpperCase()})))([
+const colors = (colors => colors.map(color => ({name: color.charAt(0).toUpperCase() + color.slice(1), value: color.toUpperCase()})))([
   "black",
   "white",
   "red",
@@ -20,27 +20,27 @@ const colors = (_colors => _colors.map(_color => ({name: _color.charAt(0).toUppe
   "multi"
 ]);
 
-const FilterSidebar = ({default_sort = 'new'}) => {
-  const [search_params, setSearchParams] = useSearchParams();
+const FilterSidebar = ({defaultSort = 'new'}) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const handleInputChange = (field, value) => {
     setSearchParams(() => {
-      const current_params = Object.fromEntries(search_params.entries());
-      current_params[field] = value;
-      return current_params;
+      const currentParams = Object.fromEntries(searchParams.entries());
+      currentParams[field] = value;
+      return currentParams;
     });
   };
 
   const handleRemoveFilter = (field) => {
     setSearchParams(() => {
-      const current_params = Object.fromEntries(search_params.entries());
-      delete current_params[field];
-      return current_params;
+      const currentParams = Object.fromEntries(searchParams.entries());
+      delete currentParams[field];
+      return currentParams;
     });
   };
 
   const FilterChips = () => (
     <Grid container spacing={1} style={{ marginTop: '10px', minHeight: '40px' }}>
-      {Array.from(search_params.entries())
+      {Array.from(searchParams.entries())
         .filter(([field, value]) => value && field !== 'page')
         .map(([field, value]) => (
           <Grid item key={field}>
@@ -61,7 +61,7 @@ const FilterSidebar = ({default_sort = 'new'}) => {
               <Select
                 data-testId='size-select'
                 id="size"
-                value={search_params.get('size') || ''}
+                value={searchParams.get('size') || ''}
                 onChange={(e) => handleInputChange('size', e.target.value)}
                 displayEmpty
                 inputProps={{ 'aria-label': 'Without label' }}
@@ -82,7 +82,7 @@ const FilterSidebar = ({default_sort = 'new'}) => {
               <Select
                 data-testId='color-select'
                 id="color"
-                value={search_params.get('color') || ''}
+                value={searchParams.get('color') || ''}
                 onChange={(e) => handleInputChange('color', e.target.value)}
                 displayEmpty
                 inputProps={{ 'aria-label': 'Without label' }}
@@ -107,7 +107,7 @@ const FilterSidebar = ({default_sort = 'new'}) => {
               <Select
                 data-testId='sort-select'
                 id="sort"
-                value={search_params.get('sort') || default_sort}
+                value={searchParams.get('sort') || defaultSort}
                 onChange={(e) => handleInputChange('sort', e.target.value)}
                 displayEmpty
                 inputProps={{ 'aria-label': 'Without label' }}

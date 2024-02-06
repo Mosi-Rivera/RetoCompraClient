@@ -1,10 +1,9 @@
-export const SIGN_IN = async (userInfo) => {
+export const signIn = async (userInfo) => {
     try {
         const response = await fetch("http://localhost:4800/api/auth/login", {
             method: "POST",
             credentials: "include",
             headers: {
-                "Access-Control-Allow-Origin": "*",
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(userInfo)
