@@ -1,29 +1,37 @@
 import React from 'react';
 import MyForm from './components/MyForm';
-
-import { HashRouter, Routes, Route, Outlet, NavLink } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignIn from './pages/SignIn';
-// import Home from './pages/Home';
-// import { loader } from './pages/Home';
+import {ORIGIN_URL} from './api/environment';
 
 import './app.css';
+import DisplayProducts from './components/DisplayProducts/DisplayProducts';
 
+const fetchProducts = async (filters) => {
+  try
+  {
+    const query = '?' + new URLSearchParams(filters);
+    console.log(query);
+    const response = await fetch(ORIGIN_URL + '/api/products' + query);
+    if (response.ok)
+      return response.json();
+    return Promise.reject(res);
+  }
+  catch(err)
+  {
+    console.log(err);
+  }
+}
 
 function App() {
 
   return (
-    <>
-      <HashRouter>
+      <BrowserRouter>
         <Routes>
-          {/* <Route
-            loader={loader}
-            path="/" element={<Home />}></Route> */}
           <Route path='/login' element={<SignIn />}></Route>
           <Route path='/register' element={<MyForm />}></Route>
         </Routes>
-      </HashRouter>
-
-    </>
+      </BrowserRouter>
   );
 }
 

@@ -2,8 +2,8 @@ import react from 'react'
 import {render, screen} from '@testing-library/react';
 import { beforeEach, expect } from 'vitest';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ProductFilters from '../ProductFilters';
-import DisplayProducts from '../DisplayProducts';
+import ProductsList from '../ProductsList';
+
 const products = (({brands, names}, amount) => {
     const result = [];
     for (let i = 0; i < amount; ++i)
@@ -25,27 +25,24 @@ const products = (({brands, names}, amount) => {
     brands: ["NIKE", "H&M", "OTHER"],
     names: ["Shirt", "T-Shirt", "Dress Shirt"]
 }, 20);
-const fetchProducts = async () => {
-    Promise.resolve({products, pages: 1});
-}
 
 describe("Product Component", () => {
+
+
     test("Should render.", () => {
-        render(<BrowserRouter>
-            <Routes>
-              <Route path='/' element={<DisplayProducts fetchMethod={fetchProducts}/>}/>
-            </Routes>
-          </BrowserRouter>);
-        expect(screen.getByTestId('product-filters')).toBeDefined();
-    });
-    test("Should render inputs.", () => {
       render(<BrowserRouter>
         <Routes>
-          <Route path='/' element={<DisplayProducts/>}/>
+          <Route path='/' element={<ProductsList products={products}/>}/>
         </Routes>
       </BrowserRouter>);
-        expect(screen.getByTestId('size-select')).toBeDefined();
-        expect(screen.getByTestId('color-select')).toBeDefined();
-        expect(screen.getByTestId('sort-select')).toBeDefined();
+        expect(screen.getByTestId('products-container')).toBeDefined();
+    });
+    test("Should render products.", () => {
+      render(<BrowserRouter>
+        <Routes>
+          <Route path='/' element={<ProductsList products={products}/>}/>
+        </Routes>
+      </BrowserRouter>);
+        expect(screen.getByTestId('products-container').childElementCount).toBe(products.length);
     });
 });

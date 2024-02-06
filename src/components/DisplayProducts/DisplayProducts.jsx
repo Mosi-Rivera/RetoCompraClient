@@ -3,57 +3,79 @@ import Pagination from "@mui/material/Pagination";
 import ProductsList from "../ProductsList/ProductsList";
 import ProductFilters from "../ProductFilters/ProductFilters";
 import { useEffect, useState } from "react";
+import { Backdrop, CircularProgress } from "@mui/material";
+import { useSearchParams } from "react-router-dom";
 
-const DisplayProducts = ({fetchMethod, filter = false, pagination = false, default_sort = '', default_limit = 24}) => {
-    const [filter_state, setFilterState] = useState({
-        color: '',
-        size: '',
-        sort: default_sort
-    });
-    const [pagination_data, setPaginationData] = useState({
-        page: 1,
-        limit: default_limit,
-        max_pages: 100
-    });
+const DisplayProducts = ({fetchMethod, filter = false, pagination = false, default_sort = '', default_limit = 24, loading_backdrop = false}) => {
+    const [search_params, setSearchParams] = useSearchParams();
+    const page = parseInt(search_params.get('page')) || 1;
+    const limit = parseInt(search_params.get('limit')) || default_limit;
+    const [max_pages, setMaxPages] = useState(0);
     const [products, setProducts] = useState(null);
+    const [is_loading, setIsLoading] = useState(false);
+    const [backdrop_open, setBackdropOpen] = useState(false);
     const handleFetch = async () => {
         try
         {
-            const options = {...filter_state, page: pagination_data.page, limit: pagination_data.limit};
-            for (const k in options)
-                if (!options[k]) delete options[k];
-            const _products = await fetchMethod(options);
+            setIsLoading(true);
+            const options = Object.fromEntries(search_params.entries());
+            options.limit = limit;
+            options.page = page;
+            const {products: _products, pages} = await fetchMethod(options);
             setProducts(_products);
+            setMaxPages(pages);
         }
         catch(err)
         {
             setProducts(null);
         }
+        finally
+        {
+            setIsLoading(false);
+        }
     }
     const setPage = (page) => {
-        setPaginationData({...pagination_data, page});
+        setSearchParams((sp) => {
+            const current_params = Object.fromEntries(sp.entries());
+            current_params.page = page;
+            return current_params;
+        });
     }
+    useEffect(() => {
+        if (is_loading)
+            setBackdropOpen(true);
+        else
+        setTimeout(() => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            setBackdropOpen(false);
+        }, 100);
+    }, [is_loading]);
     useEffect(
         () => {
-            handleFetch()
-            window.scrollTo(0, 0);
+            handleFetch();
         },
-        [
-            filter_state.color,
-            filter_state.size,
-            filter_state.sort,
-            pagination_data.page,
-            pagination_data.limit
-        ]
+        [search_params]
     );
     return (
-        <Container>
-            { filter && <ProductFilters setFilterState={setFilterState} filter_state={filter_state}/> }
+        <Container data-testId='display-products'>
+            { filter && <ProductFilters default_sort={default_sort}/> }
+            {
+                loading_backdrop && <Backdrop
+                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    open={backdrop_open}
+                    // onClick={handleClose}
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop>
+            }
             <ProductsList products={products} />
             {
                 pagination && <Pagination
-                count={pagination_data.max_pages}
-                page={pagination_data.page}
+                count={max_pages}
+                page={page}
                 onChange={(_, value) => setPage(value)}
                 color="primary"
                 size="large"
