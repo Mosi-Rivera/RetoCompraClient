@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../styles/SignIn.css";
 import Header from "../components/Header";
-import { SIGN_IN } from "../api/authRoutes";
+import { signIn } from "../api/authRoutes";
 
 
 export default function SignIn() {
@@ -31,7 +31,7 @@ export default function SignIn() {
     async function handleClick(event) {
         event.preventDefault();
         try {
-            const user = await SIGN_IN(signForm);
+            const user = await signIn(signForm);
             console.log(user)
         } catch (error) {
             console.log(error)
