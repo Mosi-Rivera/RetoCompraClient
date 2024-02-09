@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { registerForm} from "../api/authRoutes"
+import "../styles/Myform.css"
 
 const MyForm = () => {
   const [formData, setFormData] = useState({
@@ -16,20 +18,25 @@ const MyForm = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
   const password = formData.password;
+ 
   const confirmPassword = formData.confirmPassword;
 
-    if (password !== confirmPassword)
-    { 
+    if (password !== confirmPassword){ 
       setErrorMessage ( {error: "Confirm password does not match"});
       console.log(password,confirmPassword)
       return; 
-    
     }
 
+    try {
+      const user = await registerForm(formData);
+      console.log(user)
+  } catch (error) {
+      console.log(error)
+    }
 
     // Add logic to handle form submission
     console.log('Form submitted:', formData);
@@ -54,8 +61,8 @@ const MyForm = () => {
       <br />
       <label>
         Password:
-        <input type="password" name="password" value={formData.password} onChange={handleChange} pattern=" ($10<)(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
-        title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" />
+        <input type="password" name="password" value={formData.password} onChange={handleChange} pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$" 
+        title="Must contain at least one number and one uppercase and lowercase letter, and at least 5 or more characters" />
       </label>
       <br />
       <label>
@@ -67,7 +74,7 @@ const MyForm = () => {
         <span>{errorMessage.error}
         </span> }
         <br />
-      <button type="submit">Submit</button>
+      <button type="submit">Register</button>
     </form>
   );
 };
