@@ -3,28 +3,28 @@ import CloseIcon from '@mui/icons-material/Close';
 
 const ModalComponent = ({
     children,
-    button_text,
+    buttonText,
     title,
     open,
     handleOpen,
     handleClose,
-    modal_sx = {},
-    button_sx = {},
-    title_sx = {}
+    modalSx = {},
+    buttonSx = {},
+    titleSx = {}
 }) => {
     return <>
         <Button
-        sx={button_sx}
+        sx={buttonSx}
         data-testid="button"
-        onClick={handleOpen}>{button_text}
+        onClick={handleOpen}>{buttonText}
         </Button>
         <Dialog
-        sx={modal_sx}
+        sx={modalSx}
         open={open}
         onClose={handleClose}
         data-testid="modal"
         >
-            <DialogTitle data-testid="title" sx={title_sx}>
+            <DialogTitle data-testid="title" sx={titleSx}>
                 {title}
             </DialogTitle>
             <IconButton

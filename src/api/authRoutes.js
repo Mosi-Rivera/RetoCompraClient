@@ -1,20 +1,23 @@
+
 import { ORIGIN_URL } from "./environment";
 
 export const SIGN_IN = async (userInfo) => {
-    const response = await fetch( ORIGIN_URL + "/signin", {
+  try{
+    const response = await fetch( ORIGIN_URL + "/api/auth/login", {
         method: "POST",
+        credentials: "include",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(userInfo)
     })
-    if (response.ok) {
-        // response.json() will return a json of all the products on the server side
-        return response.json();
-    } else {
-        return Promise.reject(response);
+        const result = await response.json();
+        console.log(result)
+    } catch(error) {
+        console.log("Error " + error);
     }
 }
+
 
 export const registerForm = async (userData) => {
     
@@ -37,3 +40,4 @@ export const registerForm = async (userData) => {
         alert('Registration failed');
     };
 }
+
