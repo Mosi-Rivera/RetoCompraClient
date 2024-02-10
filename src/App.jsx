@@ -2,7 +2,7 @@ import React from 'react';
 import MyForm from './components/MyForm';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignIn from './pages/SignIn';
-import './app.css';
+import './App.css';
 
 function App() {
 
