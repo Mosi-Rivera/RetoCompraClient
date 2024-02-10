@@ -11,7 +11,7 @@ export const signIn = async (userInfo) => {
     })
     if (!response.ok)
         return Promise.reject(response);
-    await response.json();
+    return response.json();
 }
 
 
