@@ -1,0 +1,14 @@
+.background-image {
+    background-image: url(https://i.vimeocdn.com/video/622671956-1f92a1dec9e8338f73b98321f20771a77bffc35c28e046ba3f978b27ab4ae989-d?mw=1300&mh=731); /* Adjust the path */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh; /* Adjust as needed */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white; /* Adjust text color for better visibility */
+    text-align: center;
+  }
