@@ -1,5 +1,5 @@
 import React from 'react';
-import MyForm from './pages/MyForm';
+import MyForm from './components/MyForm';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignIn from './pages/SignIn';
 import Home from './pages/Home';
