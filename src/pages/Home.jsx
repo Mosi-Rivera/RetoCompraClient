@@ -1,47 +1,38 @@
-import React, { useState } from 'react';
-import '../styles/backgroundImage.css';
-import '../styles/Home.css';
-import DisplayProducts from '../components/DisplayProducts/DisplayProducts.jsx';
-import { getProducts } from '../api/products/productRoutes.js';
-import Header from '../components/Header.jsx';
-//import ModalComponent from '../components/Modal/Modal.jsx';
+import { FolderCopyOutlined } from "@mui/icons-material";
+import { Container } from "@mui/material";
+import Header from "../components/Header";
+import DisplayProducts from "../components/DisplayProducts/DisplayProducts";
+import { getProducts } from "../api/products/productRoutes";
+import Footer from "../components/Footer";
+import "../styles/Home.css";
 
-function HomePage() {
-
-    return (
-      <>
-    <div>
-      <Header/>    
-      <div className='background-image'> 
-        <nav>
-          <ul>
-            <li><a href="/login">Log In</a></li>
-            <li><a href="/AboutUs">About Us</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul>
-        </nav>
-      </div>
-
+const Home = () => {
+  return (
+    <Container disableGutters maxWidth={false} sx={{maxWidth: "1920px", position: "relative"}}> 
+      <Header/>
       <main>
-
-        <h3>Welcome to Color T-Shirts!</h3>
-
-        {/* Display products */}
-        <DisplayProducts fetchMethod={getProducts} defaultLimit={5}/>
-    
-        
+        <section className="full" style={{
+          width: '100%',
+          paddingTop: "56px",
+          maxHeight: "100vh",
+          overflow: 'hidden'
+        }}>
+          <video preload="auto" autoPlay muted loop style={{
+            objectFit: 'cover',
+            width: '100%',
+            height: '100%',
+            display: "block",
+            overflow: "hidden",
+          }} src="/assets/video_of_women_modelling (1080p).mp4" type="video/mp4"/>
+        </section>
+        <section>
+          <h2 style={{textAlign: 'center'}}>Popular Products</h2>
+          <DisplayProducts fetchMethod={getProducts} defaultSort="popular" defaultLimit={4}/> 
+        </section>
       </main>
-    
-
-
-    </div>
-    <footer>
-
-{/* Move footer to Component and import */}
-{"2024 Digital Bit Lord Website. All rights reserved"}
-</footer>
-    </>
+      <Footer/>
+    </Container>
   );
 }
 
-export default HomePage;
+export default Home;

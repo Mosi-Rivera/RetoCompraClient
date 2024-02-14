@@ -1,7 +1,6 @@
 import { ORIGIN_URL } from "./environment";
 
 export const signIn = async (userInfo) => {
-  try{
     const response = await fetch( ORIGIN_URL + "/api/auth/login", {
         method: "POST",
         credentials: "include",
@@ -10,33 +9,44 @@ export const signIn = async (userInfo) => {
         },
         body: JSON.stringify(userInfo)
     })
-        const result = await response.json();
-        console.log(result)
-    } catch(error) {
-        console.log("Error " + error);
-    }
+    if (!response.ok)
+        return Promise.reject(response);
+    return response.json();
 }
 
 
 export const registerForm = async (userData) => {
-    
-    try {
-        const response = await fetch( ORIGIN_URL + "/api/auth/register", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userData)
-        });
-    
-        if (!response.ok) {
-            return Promise.reject(response);
-        }
-        alert('Registration successful');
-        return response.json();
-    } catch (error) {
-        console.error('Error:', error.message);
-        alert('Registration failed');
-    };
+    const response = await fetch( ORIGIN_URL + "/api/auth/register", {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+    });
+
+    if (!response.ok)
+        return Promise.reject(response);
+    return response.json();
 }
 
+export const logout = async () => {
+    const response = await fetch(ORIGIN_URL + "/api/auth/logout", {
+        method: 'GET',
+        credentials: 'include'
+    });
+    if (!response.ok)
+        return Promise.reject(response);
+    return Promise.resolve(response.status);
+
+}
+
+export const whoAmI = async () => {
+    const response = await fetch(ORIGIN_URL + "/api/auth/whoAmI", {
+        method: 'GET',
+        credentials: "include"
+    });
+    if (!response.ok)
+        return Promise.reject(response);
+    return response.json();
+}

@@ -1,9 +1,4 @@
-.signin-form {
-    position: relative;
-    padding: 20px 0;
-    margin-top: 8rem;
-}
-
+.register-form input,
 .signin-form input {
     display: block;
     margin: 3px auto;
@@ -16,6 +11,7 @@
     font-weight: 300;
 }
 
+.register-form button,
 .signin-form button {
     display: block;
     margin: 0 auto;

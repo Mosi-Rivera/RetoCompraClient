@@ -2,17 +2,13 @@ form {
     margin: 20px;
     font-family: Arial, sans-serif;
   }
-<<<<<<< HEAD
     
-=======
-  
->>>>>>> 6241f08 (Adding homePage)
   label {
     margin-bottom: 5px;
     display: block;
   }
   
-  input[type="text"],
+  form input[type="text"],
   input[type="email"],
   input[type="password"] {
     width: 200px;
@@ -38,9 +34,4 @@ form {
   span.error {
     color: red;
     font-size: 14px;
-<<<<<<< HEAD
   }
-=======
-  }
-  
->>>>>>> 6241f08 (Adding homePage)

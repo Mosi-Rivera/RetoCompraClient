@@ -21,6 +21,8 @@ const DisplayProducts = ({fetchMethod, filter = false, pagination = false, defau
             const options = Object.fromEntries(searchParams.entries());
             options.limit = limit;
             options.page = page;
+            if (!options.sort)
+                options.sort = defaultSort;
             const {products: newProducts, pages} = await fetchMethod(options);
             setProducts(newProducts);
             setMaxPages(pages);
@@ -60,7 +62,7 @@ const DisplayProducts = ({fetchMethod, filter = false, pagination = false, defau
         [searchParams]
     );
     return (
-        <Container data-testId='display-products'>
+        <div data-testId='display-products'>
             { filter && <ProductFilters defaultSort={defaultSort}/> }
             {
                 loadingBackdrop && <Backdrop
@@ -85,7 +87,7 @@ const DisplayProducts = ({fetchMethod, filter = false, pagination = false, defau
                 style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}
                 />
             }
-        </Container>
+        </div>
     );
 }
 

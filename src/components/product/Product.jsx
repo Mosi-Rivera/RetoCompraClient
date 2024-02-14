@@ -9,8 +9,6 @@ const ProductContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-//   border: '1px solid #ddd',
-  borderRadius: theme.spacing(1),
   overflow: 'hidden',
 }));
 
@@ -18,7 +16,7 @@ const ProductImage = styled(Box)(({ thumbnail }) => ({
   width: '100%',
   height: '0',
   paddingBottom: '120%', // 4:3 aspect ratio for the thumbnail
-  backgroundSize: 'contain',
+  backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center center',
   backgroundImage: `url(${thumbnail})`,
@@ -33,7 +31,6 @@ const ProductContent = styled(Box)({
 });
 
 const Product = ({ product }) => {
-  console.log(product)
   const { assets, name, brand, price, _id } = product;
   const thumbnail = assets && assets.thumbnail ? assets.thumbnail : '';
 
@@ -49,7 +46,7 @@ const Product = ({ product }) => {
                 </Typography>
 
                 <Typography variant="body1">
-                {price && price.value} {price && price.currency}
+                ${price && price.value}
                 </Typography>
             </ProductContent>
         </ProductContainer>

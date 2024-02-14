@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { registerForm} from "../api/authRoutes"
+import userContext from "../contexts/userContext";
 import "../styles/MyForm.css"
 
 const MyForm = () => {
+  const {setUserInfo} = useContext(userContext);
   const [formData, setFormData] = useState({
     firstName: '', 
     lastName: '',
@@ -32,8 +34,9 @@ const MyForm = () => {
     }
 
     try {
-      const user = await registerForm(formData);
+      const {user} = await registerForm(formData);
       console.log(user)
+      setUserInfo({isAuthenticated: true, user});
   } catch (error) {
       console.log(error)
     }
