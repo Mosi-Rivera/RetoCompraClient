@@ -124,7 +124,7 @@ export default function Header(props) {
                     <div>
                         <nav>
                             <NavLink className="nav-links" to="/">Home</NavLink>
-                            <NavLink className="nav-links" to="/signin">Sign In</NavLink>
+                            <NavLink className="nav-links" to="/login">Log In</NavLink>
                             <NavLink className="nav-links" to="/register">Register</NavLink>
                         </nav >
                         <div>
