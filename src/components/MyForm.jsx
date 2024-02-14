@@ -21,9 +21,9 @@ const MyForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-  const password = formData.password;
+    const password = formData.password;
  
-  const confirmPassword = formData.confirmPassword;
+    const confirmPassword = formData.confirmPassword;
 
     if (password !== confirmPassword){ 
       setErrorMessage ( {error: "Confirm password does not match"});
@@ -31,14 +31,14 @@ const MyForm = () => {
       return; 
     }
 
+    // Logic to handle form submission
     try {
       const user = await registerForm(formData);
       console.log(user)
-  } catch (error) {
+    } catch (error) {
       console.log(error)
     }
 
-    // Add logic to handle form submission
     console.log('Form submitted:', formData);
   };
 
