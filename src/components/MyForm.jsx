@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { registerForm} from "../api/authRoutes"
-import "../styles/MyForm.css"
+//import "../styles/MyForm.css"
+import "../styles/Form.css"
 
 const MyForm = () => {
   const [formData, setFormData] = useState({
@@ -27,48 +28,41 @@ const MyForm = () => {
 
     if (password !== confirmPassword){ 
       setErrorMessage ( {error: "Confirm password does not match"});
-      console.log(password,confirmPassword)
       return; 
     }
 
     // Logic to handle form submission
     try {
       const user = await registerForm(formData);
-      console.log(user)
     } catch (error) {
       console.log(error)
     }
-
-    console.log('Form submitted:', formData);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        First Name:
-        <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} />
+    <form onSubmit={handleSubmit} className='register-form'>
+      <label htmlFor="firstName" >
+        firstName
+        <input type="text" placeholder='First Name' name="firstName" value={formData.firstName} onChange={handleChange} />
       </label>
       <br />
-      <label>
-        Last Name:
-        <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} />
+      <label htmlFor="lastName">
+        lastName
+        <input type="text" placeholder='Last Name' name="lastName" value={formData.lastName} onChange={handleChange} />
       </label>
       <br />
-      <label>
-        Email:
-        <input type="email" name="email" value={formData.email} onChange={handleChange} />
+      <label htmlFor="email">
+        email
+        <input type="email" placeholder='Email' name="email" value={formData.email} onChange={handleChange} />
       </label>
       <br />
-      <label>
-        Password:
-        <input type="password" name="password" value={formData.password} onChange={handleChange} pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$" 
+      <label htmlFor="password">
+        password
+        <input type="password" placeholder='Password' name="password" value={formData.password} onChange={handleChange} pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$" 
         title="Must contain at least one number and one uppercase and lowercase letter, and at least 5 or more characters" />
       </label>
       <br />
-      <label>
-        Confirm password:
-        <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
-      </label>
+        <input type="password" placeholder='Confirm Password' name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
       <br />
       {errorMessage.error &&  
         <span>{errorMessage.error}

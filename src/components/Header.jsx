@@ -25,7 +25,7 @@ const AuthenticatedNav = ({firstName, lastName, role}) => {
     return (
         <nav>
 
-            {role === "admin" && <Button sx={{color: "white", border: "1px solid red"}}>Admin Button</Button>}
+            {role === "admin" && <Button sx={{color: "white", border: "1px solid red"}}>Admin</Button>}
             <IconButton
                 size="large"
                 edge="end"
@@ -45,7 +45,6 @@ const AuthenticatedNav = ({firstName, lastName, role}) => {
 const NotAuthenticatedNav = () => {
     const [showRegister, setShowRegister] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
-    console.log(showRegister, showLogin);
     return (
         <nav>
             <Modal
