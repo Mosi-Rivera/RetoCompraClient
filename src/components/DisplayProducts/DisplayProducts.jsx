@@ -21,6 +21,8 @@ const DisplayProducts = ({fetchMethod, filter = false, pagination = false, defau
             const options = Object.fromEntries(searchParams.entries());
             options.limit = limit;
             options.page = page;
+            if (!options.sort)
+                options.sort = defaultSort;
             const {products: newProducts, pages} = await fetchMethod(options);
             setProducts(newProducts);
             setMaxPages(pages);
