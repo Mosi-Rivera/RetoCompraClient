@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { registerForm} from "../api/authRoutes"
-//import "../styles/MyForm.css"
 import "../styles/Form.css"
 
 const MyForm = () => {

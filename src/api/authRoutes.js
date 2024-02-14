@@ -30,6 +30,17 @@ export const registerForm = async (userData) => {
     return response.json();
 }
 
+export const logout = async () => {
+    const response = await fetch(ORIGIN_URL + "/api/auth/logout", {
+        method: 'GET',
+        credentials: 'include'
+    });
+    if (!response.ok)
+        return Promise.reject(response);
+    return Promise.resolve(response.status);
+
+}
+
 export const whoAmI = async () => {
     const response = await fetch(ORIGIN_URL + "/api/auth/whoAmI", {
         method: 'GET',

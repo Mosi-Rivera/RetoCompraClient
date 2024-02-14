@@ -16,28 +16,27 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Modal from "./Modal/Modal";
-import userContext from "../contexts/userContext";
+import userContext, { newDefaultUserContextState } from "../contexts/userContext";
 import MyForm from "./MyForm";
 import { Button } from "@mui/material";
 import SignIn from "./SignIn";
+import DropdownMenuButton from "./DropdownMenuButton";
+import { logout } from "../api/authRoutes";
 
-const AuthenticatedNav = ({firstName, lastName, role}) => {
+const AuthenticatedNav = ({firstName, lastName, role, handleLogout}) => {
     return (
-        <nav>
-
+        <nav style={{display: "flex"}}>
             {role === "admin" && <Button sx={{color: "white", border: "1px solid red"}}>Admin</Button>}
-            <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                // aria-controls={menuId}
-                aria-haspopup="true"
-                // onClick={handleProfileMenuOpen}
-                color="inherit"
-            >
-                <AccountCircle />
-                <span style={{fontSize: "1rem"}}>{firstName + " " + lastName}</span>
-            </IconButton>
+            <DropdownMenuButton 
+                sx={{color: "white", maxWidth: '150px'}}
+                buttons={[
+                    {content: <Typography>Account Details</Typography>},
+                    {content: <Typography>Order History</Typography>},
+                    {content: <Typography>Logout</Typography>, onClick: handleLogout},
+                ]}
+                buttonContent={
+                    <><AccountCircle /> <Typography textOverflow={"ellipsis"} overflow={"clip"} style={{marginLeft: ".25rem", fontSize: "1rem"}}>{firstName}</Typography></>
+            }/>
         </nav>
     );
 }
@@ -73,7 +72,15 @@ const NotAuthenticatedNav = () => {
 }
 
 const Header = (props) => {
-    const {userInfo} = useContext(userContext);
+    const {userInfo, setUserInfo} = useContext(userContext);
+    const handleLogout = async () => {
+        try {
+            await logout();
+            setUserInfo(newDefaultUserContextState());
+        } catch (error) {
+            console.log(error);
+        }
+    }
     
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
@@ -168,7 +175,7 @@ const Header = (props) => {
                     </Box>
                     <div>
                         { userInfo.isAuthenticated ?
-                            <AuthenticatedNav role={userInfo.user.role} firstName={userInfo.user.firstName} lastName={userInfo.user.lastName}/> :
+                            <AuthenticatedNav handleLogout={handleLogout} role={userInfo.user.role} firstName={userInfo.user.firstName} lastName={userInfo.user.lastName}/> :
                             <NotAuthenticatedNav/>
                         }
                         <div>
