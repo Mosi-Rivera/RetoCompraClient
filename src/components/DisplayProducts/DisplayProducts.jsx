@@ -60,7 +60,7 @@ const DisplayProducts = ({fetchMethod, filter = false, pagination = false, defau
         [searchParams]
     );
     return (
-        <Container data-testId='display-products'>
+        <div data-testId='display-products'>
             { filter && <ProductFilters defaultSort={defaultSort}/> }
             {
                 loadingBackdrop && <Backdrop
@@ -85,7 +85,7 @@ const DisplayProducts = ({fetchMethod, filter = false, pagination = false, defau
                 style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}
                 />
             }
-        </Container>
+        </div>
     );
 }
 

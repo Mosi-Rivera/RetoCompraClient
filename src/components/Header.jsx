@@ -24,16 +24,21 @@ import DropdownMenuButton from "./DropdownMenuButton";
 import { logout } from "../api/authRoutes";
 
 const AuthenticatedNav = ({firstName, lastName, role, handleLogout}) => {
+    const buttons = [
+        {content: <Typography>Account Details</Typography>},
+        {content: <Typography>Order History</Typography>},
+        {content: <Typography>Logout</Typography>, onClick: handleLogout},
+    ];
+    if (role === 'admin') {
+        buttons.unshift({
+            content: <Typography color={"red"}>Admin Dashboard</Typography>
+        });
+    }
     return (
         <nav style={{display: "flex"}}>
-            {role === "admin" && <Button sx={{color: "white", border: "1px solid red"}}>Admin</Button>}
             <DropdownMenuButton 
                 sx={{color: "white", maxWidth: '150px'}}
-                buttons={[
-                    {content: <Typography>Account Details</Typography>},
-                    {content: <Typography>Order History</Typography>},
-                    {content: <Typography>Logout</Typography>, onClick: handleLogout},
-                ]}
+                buttons={buttons}
                 buttonContent={
                     <><AccountCircle /> <Typography textOverflow={"ellipsis"} overflow={"clip"} style={{marginLeft: ".25rem", fontSize: "1rem"}}>{firstName}</Typography></>
             }/>
