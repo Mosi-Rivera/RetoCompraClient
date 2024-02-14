@@ -2,7 +2,11 @@ form {
     margin: 20px;
     font-family: Arial, sans-serif;
   }
+<<<<<<< HEAD
     
+=======
+  
+>>>>>>> 6241f08 (Adding homePage)
   label {
     margin-bottom: 5px;
     display: block;
@@ -34,4 +38,9 @@ form {
   span.error {
     color: red;
     font-size: 14px;
+<<<<<<< HEAD
   }
+=======
+  }
+  
+>>>>>>> 6241f08 (Adding homePage)
