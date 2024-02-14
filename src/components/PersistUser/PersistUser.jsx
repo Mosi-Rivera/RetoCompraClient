@@ -3,7 +3,7 @@ import {whoAmI} from "../../api/authRoutes"
 import userContext from "../../contexts/userContext"
 const PersistUser = ({children}) => {
     const {userInfo, setUserInfo} = useContext(userContext);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => console.log(userInfo), [userInfo]);
     useEffect(() => {
         const getUser = async () => {
@@ -23,8 +23,10 @@ const PersistUser = ({children}) => {
             }
         }
         console.log(isLoading);
-        if (isLoading)
+        if (!isLoading) {
+            setIsLoading(true);
             getUser();
+        }
     }, []);
     if (isLoading)
         <></>//CAN JUST show anything
