@@ -15,7 +15,7 @@ const ProductContainer = styled(Box)(({ theme }) => ({
 const ProductImage = styled(Box)(({ thumbnail }) => ({
   width: '100%',
   height: '0',
-  paddingBottom: '120%', // 4:3 aspect ratio for the thumbnail
+  paddingBottom: '100%', // 4:3 aspect ratio for the thumbnail
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center center',
@@ -24,9 +24,9 @@ const ProductImage = styled(Box)(({ thumbnail }) => ({
 }));
 
 const ProductContent = styled(Box)({
-  textAlign: 'left',
+  textAlign: "center",
   padding: '8px',
-  paddingBottom: '2rem',
+  // padding: '4rem 0px',
   width: '100%',
 });
 
@@ -35,7 +35,7 @@ const Product = ({ product }) => {
   const thumbnail = assets && assets.thumbnail ? assets.thumbnail : '';
 
   return (<NavLink to={`/product/${_id}`}>
-        <ProductContainer data-testId='product-container'>
+        <ProductContainer padding={2} data-testId='product-container'>
             <ProductImage data-testId='product-image' thumbnail={thumbnail} />
             <ProductContent>
                 <Typography variant="subtitle2" color="textSecondary">

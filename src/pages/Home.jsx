@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import Header from "../components/Header";
 import DisplayProducts from "../components/DisplayProducts/DisplayProducts";
 import { getProducts } from "../api/products/productRoutes";
@@ -13,20 +13,30 @@ const Home = () => {
         <section className="full" style={{
           width: '100%',
           paddingTop: "56px",
-          maxHeight: "100vh",
-          overflow: 'hidden'
+          height: "90vh",
+          overflow: 'hidden',
+          backgroundSize: 'cover',
+          backgroundImage: "url(/assets/dude_in_tshirt.jpg)",
+          backgroundColor: "#333333",
+          backgroundPositionX: "center",
+          display: 'flex',
+          justifyContent: "flex-start",
+          alignItems: "flex-start"
         }}>
-          <video preload="auto" autoPlay muted loop style={{
-            objectFit: 'cover',
-            width: '100%',
-            height: '100%',
-            display: "block",
-            overflow: "hidden",
-          }} src="/assets/video_of_women_modelling (1080p).mp4" type="video/mp4"/>
+          <div></div>
         </section>
         <section>
-          <h2 style={{textAlign: 'center'}}>Popular Products</h2>
-          <DisplayProducts fetchMethod={getProducts} defaultSort="popular" defaultLimit={4}/> 
+          <Container disableGutters maxWidth={false} sx={{maxWidth: '1440px', textAlign: "center", padding: "0px 2rem"}}>
+            <div style={{width: "100%", borderBottom: "1px solid #e1e1e1", marginBottom: "4rem"}}>
+              <div style={{maxWidth: '90%', margin: "0 auto", paddingBottom: "2rem"}}>
+                <Typography variant="h2" paddingY={5} fontSize="2.5rem">Explore Our Top Picks</Typography>
+                <Typography lineHeight="1.5rem" fontSize="1.1rem" variant="body1">
+                  Dive into our curated selection of premium shirts that are making waves in the style world. From timeless classics to contemporary must-haves, each piece is meticulously chosen for its quality and sophistication. Elevate your wardrobe effortlessly with our top picks, setting the standard for refined fashion.
+                </Typography>
+              </div>
+            </div>
+            <DisplayProducts fetchMethod={getProducts} defaultSort="popular" defaultLimit={6}/> 
+          </Container>
         </section>
       </main>
       <Footer/>

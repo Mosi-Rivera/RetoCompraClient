@@ -36,7 +36,7 @@ const AuthenticatedNav = ({firstName, lastName, role, handleLogout}) => {
     return (
         <nav style={{display: "flex"}}>
             <DropdownMenuButton 
-                sx={{color: "white", maxWidth: '150px'}}
+                sx={{color: "black", maxWidth: '150px'}}
                 buttons={buttons}
                 buttonContent={
                     <><AccountCircle /> <Typography textOverflow={"ellipsis"} overflow={"clip"} style={{marginLeft: ".25rem", fontSize: "1rem"}}>{firstName}</Typography></>
@@ -57,7 +57,7 @@ const NotAuthenticatedNav = () => {
                 handleClose={() => setShowRegister(false)}
                 buttonText="Register"
                 title="Register"
-                buttonSx={{color: "white"}}
+                buttonSx={{color: "black"}}
             >
                 <MyForm/>
                 <div>
@@ -76,7 +76,7 @@ const NotAuthenticatedNav = () => {
                 handleClose={() => setShowLogin(false)}
                 buttonText="Login"
                 title="Login"
-                buttonSx={{color: "white"}}
+                buttonSx={{color: "black"}}
             >
                 <SignIn/>
                 <div>
@@ -148,7 +148,7 @@ const Header = (props) => {
     return (
         <header>
             <Box sx={{ flexGrow: 1 }} />
-            <AppBar >
+            <AppBar color="inherit" sx={{boxShadow: "none", borderBottom: "1px solid #e1e1e1"}}>
                 <Toolbar>
                     <IconButton
                         size="large"
