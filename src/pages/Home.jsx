@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import DisplayProducts from "../components/DisplayProducts/DisplayProducts";
 import { getProducts } from "../api/products/productRoutes";
 import Footer from "../components/Footer";
-import "../styles/Home.css";
+// import "../styles/Home.css";
 
 const Home = () => {
   return (

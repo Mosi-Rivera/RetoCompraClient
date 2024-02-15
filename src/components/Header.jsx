@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import "../styles/Header.css"
-import { Outlet, NavLink } from "react-router-dom";
+// import "../styles/Header.css"
+import { Outlet } from "react-router-dom";
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,17 +11,16 @@ import Typography from '@mui/material/Typography';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
-import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Modal from "./Modal/Modal";
 import userContext, { newDefaultUserContextState } from "../contexts/userContext";
 import MyForm from "./MyForm";
-import { Button } from "@mui/material";
 import SignIn from "./SignIn";
 import DropdownMenuButton from "./DropdownMenuButton";
 import { logout } from "../api/authRoutes";
+import { Link } from "@mui/material";
 
 const AuthenticatedNav = ({firstName, lastName, role, handleLogout}) => {
     const buttons = [
@@ -52,6 +51,7 @@ const NotAuthenticatedNav = () => {
     return (
         <nav>
             <Modal
+                titleSx={{paddingBottom: "0px"}}
                 open={showRegister} 
                 handleOpen={() => setShowRegister(true)}
                 handleClose={() => setShowRegister(false)}
@@ -60,8 +60,17 @@ const NotAuthenticatedNav = () => {
                 buttonSx={{color: "white"}}
             >
                 <MyForm/>
+                <div>
+                    <Typography marginTop={2}>
+                        Already have an account? <Link sx={{cursor: "pointer"}} onClick={() => {
+                            setShowRegister(false);
+                            setShowLogin(true);
+                        }}>Sign In</Link>
+                    </Typography>
+                </div>
             </Modal>
             <Modal
+                titleSx={{paddingBottom: "0px"}}
                 open={showLogin}
                 handleOpen={() => setShowLogin(true)}
                 handleClose={() => setShowLogin(false)}
@@ -70,6 +79,14 @@ const NotAuthenticatedNav = () => {
                 buttonSx={{color: "white"}}
             >
                 <SignIn/>
+                <div>
+                    <Typography marginTop={2}>
+                        Don't have an account? <Link sx={{cursor: "pointer"}} onClick={() => {
+                            setShowRegister(true);
+                            setShowLogin(false);
+                        }}>Register</Link>
+                    </Typography>
+                </div>
             </Modal>
         </nav >
     );

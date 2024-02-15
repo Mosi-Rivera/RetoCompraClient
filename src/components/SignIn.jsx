@@ -1,12 +1,14 @@
 import React, { useContext, useState } from "react";
-import "../styles/Form.css"
+// import "../styles/Form.css"
 import { signIn } from "../api/authRoutes";
 import userContext from "../contexts/userContext";
+import { Box, Button, TextField, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 
 export default function SignIn() {
     const {setUserInfo} = useContext(userContext);
-
+    const [errorMessage, setErrorMessage] = useState({error: ''});
     const [signForm, setSignForm] = useState({
         email: "",
         password: ""
@@ -28,15 +30,20 @@ export default function SignIn() {
         })
     }
 
-    async function handleClick(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
         try {
+            if (!signForm.email || !signForm.password) {
+                setErrorMessage({error: "Please fill all fields."});
+                return;
+            }
             const {user} = await signIn(signForm);
             console.log(user)
             setUserInfo({isAuthenticated: true, user});
 
         } catch (error) {
-            console.log(error)
+            setSignForm(state => ({...state, password: ''}));
+            setErrorMessage({error: "Invalid username or password."});
         }
     }
 
@@ -44,21 +51,50 @@ export default function SignIn() {
 
     return (
         <div>
-            <form className="signin-form" onSubmit={handleClick}>
-                <input onChange={handleChange}
-                    name="email"
-                    value={signForm.email}
-                    placeholder="Email"
-                    type="email"
-                ></input>
-                <input onChange={handleChange}
-                    name="password"
-                    value={signForm.password}
-                    placeholder="Password"
-                    type="password"
-                ></input>
-                <button>Sign In</button>
-            </form>
+            <Box
+                component="form"
+                autoComplete="off"
+                noValidate
+                onSubmit={handleSubmit}
+            >
+                <div>
+                    <TextField 
+                        margin="normal"
+                        label='Email' 
+                        color="primary"
+                        focused 
+                        type="email" 
+                        name="email"
+                        value={signForm.email}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div>
+                    <TextField 
+                        margin="normal"
+                        label='Password' 
+                        color="primary"
+                        focused 
+                        type="password" 
+                        name="password"
+                        value={signForm.password}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div>
+                    {errorMessage.error && <Typography color="error" marginBottom={1}>*{errorMessage.error}</Typography>}
+                </div>
+                <div>
+                    <Button 
+                    variant="contained"
+                    type="submit"
+                    size="large"
+                    fullWidth
+                    >
+                        Log In
+                    </Button>
+                </div>
+            </Box>
         </div>
     )
 }

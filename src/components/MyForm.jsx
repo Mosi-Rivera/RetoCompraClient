@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { registerForm} from "../api/authRoutes"
 import userContext from "../contexts/userContext";
-import "../styles/MyForm.css"
+import { Box, Button, TextField, Typography } from '@mui/material';
+// import "../styles/MyForm.css"
 
 const MyForm = () => {
   const {setUserInfo} = useContext(userContext);
@@ -23,62 +24,120 @@ const MyForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-  const password = formData.password;
+    const password = formData.password;
  
-  const confirmPassword = formData.confirmPassword;
+    const confirmPassword = formData.confirmPassword;
+
+    if (
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
+      setErrorMessage({error: "All fields must be filled."});
+      return;
+    }
 
     if (password !== confirmPassword){ 
-      setErrorMessage ( {error: "Confirm password does not match"});
-      console.log(password,confirmPassword)
+      setErrorMessage ( {error: "Passwords do not match."});
       return; 
     }
 
     try {
       const {user} = await registerForm(formData);
-      console.log(user)
       setUserInfo({isAuthenticated: true, user});
-  } catch (error) {
-      console.log(error)
+    } catch (error) {
+      setErrorMessage({error: "Something went wrong. Try again."});
     }
-
-    // Add logic to handle form submission
-    console.log('Form submitted:', formData);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        First Name:
-        <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} />
-      </label>
-      <br />
-      <label>
-        Last Name:
-        <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} />
-      </label>
-      <br />
-      <label>
-        Email:
-        <input type="email" name="email" value={formData.email} onChange={handleChange} />
-      </label>
-      <br />
-      <label>
-        Password:
-        <input type="password" name="password" value={formData.password} onChange={handleChange} pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$" 
-        title="Must contain at least one number and one uppercase and lowercase letter, and at least 5 or more characters" />
-      </label>
-      <br />
-      <label>
-        Confirm password:
-        <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
-      </label>
-      <br />
-      {errorMessage.error &&  
-        <span>{errorMessage.error}
-        </span> }
-        <br />
-      <button type="submit">Register</button>
-    </form>
+    <Box
+    component="form"
+    noValidate
+    autoComplete='off'
+    onSubmit={handleSubmit}
+    >
+      <div>
+        <TextField
+        fullWidth
+        margin="normal"
+        focused
+        color="primary"
+        type='text'
+        name='firstName'
+        label="First Name"
+        onChange={handleChange}
+        value={formData.firstName}
+        />
+      </div>
+      <div>
+        <TextField
+        fullWidth
+        margin="normal"
+        focused
+        color="primary"
+        type='text'
+        name='lastName'
+        label="Last Name"
+        onChange={handleChange}
+        value={formData.lastName}
+        />
+      </div>
+      <div>
+        <TextField
+        fullWidth
+        margin="normal"
+        focused
+        color="primary"
+        type='email'
+        name='email'
+        label="Email"
+        onChange={handleChange}
+        value={formData.email}
+        />
+      </div>
+      <div>
+        <TextField
+        fullWidth
+        margin="normal"
+        focused
+        color="primary"
+        type='password'
+        name='password'
+        label="Password"
+        onChange={handleChange}
+        value={formData.password}
+        />
+      </div>
+      <div>
+        <TextField
+        fullWidth
+        margin="normal"
+        focused
+        color="primary"
+        type='password'
+        name='confirmPassword'
+        label="Confirm Password"
+        onChange={handleChange}
+        value={formData.confirmPassword}
+        />
+      </div>
+      <div>
+        {errorMessage.error && <Typography color="error" marginBottom={1}>*{errorMessage.error}</Typography>}
+      </div>
+      <div>
+        <Button 
+        variant="contained"
+        size="large"
+        fullWidth
+        type='submit'
+        >
+          Register
+        </Button>
+      </div>
+    </Box>
   );
 };
 
