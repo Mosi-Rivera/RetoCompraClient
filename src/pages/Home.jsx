@@ -13,17 +13,12 @@ const Home = () => {
         <section className="full" style={{
           width: '100%',
           paddingTop: "56px",
-          height: "90vh",
+          maxHeight: "90vh",
           overflow: 'hidden',
-          backgroundSize: 'cover',
-          backgroundImage: "url(/assets/dude_in_tshirt.jpg)",
-          backgroundColor: "#333333",
-          backgroundPositionX: "center",
-          display: 'flex',
-          justifyContent: "flex-start",
-          alignItems: "flex-start"
         }}>
-          <div></div>
+          <div>
+            <img src="/assets/dude_in_tshirt.jpg" style={{width: '100%'}}/>
+          </div>
         </section>
         <section>
           <Container disableGutters maxWidth={false} sx={{maxWidth: '1440px', textAlign: "center", padding: "0px 2rem"}}>

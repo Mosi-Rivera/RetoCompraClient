@@ -12,17 +12,10 @@ import { ORIGIN_URL } from "../environment"
 @param {Number=} params.maxPrice - Maximum price of products to return
 */
 export const getProducts = async (params) => {
-    try
-    {
-        const queryStr = '?' + (new URLSearchParams(params)).toString();
-        const response = await fetch(ORIGIN_URL + '/api/products' + queryStr);
-        if (response.ok)
-            return response.json();
-        else
-            Promise.reject(response);
-    }
-    catch(err)
-    {
-        console.log(err);
-    }
+    const queryStr = '?' + (new URLSearchParams(params)).toString();
+    const response = await fetch(ORIGIN_URL + '/api/products' + queryStr);
+    if (response.ok)
+        return response.json();
+    else
+        return Promise.reject(response);
 }
