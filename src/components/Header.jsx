@@ -20,7 +20,7 @@ import MyForm from "./MyForm";
 import SignIn from "./SignIn";
 import DropdownMenuButton from "./DropdownMenuButton";
 import { logout } from "../api/authRoutes";
-import { Link } from "@mui/material";
+import { Button, Link } from "@mui/material";
 
 const AuthenticatedNav = ({firstName, lastName, role, handleLogout}) => {
     const buttons = [
@@ -48,46 +48,50 @@ const AuthenticatedNav = ({firstName, lastName, role, handleLogout}) => {
 const NotAuthenticatedNav = () => {
     const [showRegister, setShowRegister] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
+    const openLogin = () => {
+        setShowRegister(false);
+        setShowLogin(true);
+    }
+    const openRegister = () => {
+        setShowRegister(true);
+        setShowLogin(false);
+    }
     return (
         <nav>
-            <Modal
-                titleSx={{paddingBottom: "0px"}}
-                open={showRegister} 
-                handleOpen={() => setShowRegister(true)}
-                handleClose={() => setShowRegister(false)}
-                buttonText="Register"
-                title="Register"
-                buttonSx={{color: "black"}}
-            >
-                <MyForm/>
-                <div>
-                    <Typography marginTop={2}>
-                        Already have an account? <Link sx={{cursor: "pointer"}} onClick={() => {
-                            setShowRegister(false);
-                            setShowLogin(true);
-                        }}>Sign In</Link>
-                    </Typography>
-                </div>
-            </Modal>
-            <Modal
-                titleSx={{paddingBottom: "0px"}}
-                open={showLogin}
-                handleOpen={() => setShowLogin(true)}
-                handleClose={() => setShowLogin(false)}
-                buttonText="Login"
-                title="Login"
-                buttonSx={{color: "black"}}
-            >
-                <SignIn/>
-                <div>
-                    <Typography marginTop={2}>
-                        Don't have an account? <Link sx={{cursor: "pointer"}} onClick={() => {
-                            setShowRegister(true);
-                            setShowLogin(false);
-                        }}>Register</Link>
-                    </Typography>
-                </div>
-            </Modal>
+            <Box sx={{ display:'flex' }}>
+                <Modal
+                    titleSx={{paddingBottom: "0px"}}
+                    open={showRegister} 
+                    handleOpen={openRegister}
+                    handleClose={() => setShowRegister(false)}
+                    buttonText="Register"
+                    title="Register"
+                    buttonSx={{color: "black"}}
+                >
+                    <MyForm/>
+                    <div>
+                        <Typography marginTop={2}>
+                            Already have an account? <Link sx={{cursor: "pointer"}} onClick={openLogin}>Sign In</Link>
+                        </Typography>
+                    </div>
+                </Modal>
+                <Modal
+                    titleSx={{paddingBottom: "0px"}}
+                    open={showLogin}
+                    handleOpen={openLogin}
+                    handleClose={() => setShowLogin(false)}
+                    buttonText="Login"
+                    title="Login"
+                    buttonSx={{color: "black"}}
+                >
+                    <SignIn/>
+                    <div>
+                        <Typography marginTop={2}>
+                            Don't have an account? <Link sx={{cursor: "pointer"}} onClick={openRegister}>Register</Link>
+                        </Typography>
+                    </div>
+                </Modal>
+            </Box>
         </nav >
     );
     
@@ -128,6 +132,7 @@ const Header = (props) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        cursor: "pointer"
     }));
 
     const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -150,15 +155,6 @@ const Header = (props) => {
             <Box sx={{ flexGrow: 1 }} />
             <AppBar color="inherit" sx={{boxShadow: "none", borderBottom: "1px solid #e1e1e1"}}>
                 <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        sx={{ mr: 2 }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
                     <Typography
                         variant="h6"
                         noWrap
@@ -167,31 +163,25 @@ const Header = (props) => {
                     >
                         Clothing Store
                     </Typography>
-                    <Box sx={{ flexGrow: 1 }} />
-                    <Search>
+                    <Box sx={{ flexGrow: 1, display: {xs: 'none', sm: 'flex'} }} />
+                    <IconButton size="large" color="inherit" sx={{display: {xs: 'flex', sm: 'none'}}}>
+                        <SearchIcon />
+                    </IconButton>
+                    <Search sx={{display: { xs: 'none', sm: 'flex' }, border: "1px solid black"}}>
                         <SearchIconWrapper>
                             <SearchIcon />
                         </SearchIconWrapper>
-                        <StyledInputBase
+                        <StyledInputBase 
                             placeholder="Search…"
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
                     <Box sx={{ flexGrow: 1 }} />
 
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                    <Box sx={{ display: "flex" }}>
                         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="error">
+                            <Badge /*badgeContent={4}*/ color="error">
                                 <ShoppingCartIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
-                        >
-                            <Badge badgeContent={17} color="error">
-                                <NotificationsIcon />
                             </Badge>
                         </IconButton>
                     </Box>

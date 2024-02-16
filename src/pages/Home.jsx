@@ -9,15 +9,9 @@ const Home = () => {
   return (
     <Container disableGutters maxWidth={false} sx={{maxWidth: "1920px", position: "relative"}}> 
       <Header/>
-      <main>
-        <section className="full" style={{
-          width: '100%',
-          paddingTop: "56px",
-          maxHeight: "90vh",
-          overflow: 'hidden',
-        }}>
+      <main className="home">
+        <section className="image">
           <div>
-            <img src="/assets/dude_in_tshirt.jpg" style={{width: '100%'}}/>
           </div>
         </section>
         <section>

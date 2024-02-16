@@ -55,7 +55,6 @@ const MyForm = () => {
   return (
     <Box
     component="form"
-    noValidate
     autoComplete='off'
     onSubmit={handleSubmit}
     >
