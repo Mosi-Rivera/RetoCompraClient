@@ -42,9 +42,19 @@ const MyForm = () => {
         ...formData, password: encryptedPassword.toString()
       });
       console.log(user)
-      setUserInfo({ isAuthenticated: true, user });
-    } catch (error) {
-      console.log(error)
+
+
+      setUserInfo({isAuthenticated: true, user});
+  } catch (error) {
+    console.log(error)
+    if (error.status === 400) {
+
+    const {field, errorMessage} = await error.json() 
+
+     setErrorMessage({error: errorMessage})
+    }  
+    console.log(error.status)
+
     }
 
     // Add logic to handle form submission
@@ -65,7 +75,8 @@ const MyForm = () => {
       <br />
       <label>
         Email:
-        <input type="email" name="email" value={formData.email} onChange={handleChange} />
+        <input type="email" name="email" value={formData.email} onChange={handleChange} pattern="^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$"
+        title="Incorrect email structure" />
       </label>
       <br />
       <label>
