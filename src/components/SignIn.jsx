@@ -12,9 +12,15 @@ export default function SignIn() {
         email: "",
         password: ""
     });
-
-
+    
+    const [errorMessage, setErrorMessage] = useState({
+        error: undefined
+      })
+    
+    
     // this function will handle both inputs, by copying the singForm object, spreding it and adding the input name and value dynamically.
+    
+    
     function handleChange(event) {
         //this const deconstructured the event.target, to save space and readability.
         const { name, value } = event.target;
@@ -29,16 +35,23 @@ export default function SignIn() {
         })
     }
 
+    
+
     async function handleClick(event) {
         event.preventDefault();
         const encryptedPassword = CryptoJS.AES.encrypt(signForm.password, import.meta.env.VITE_KEY).toString()
         try {
             const { user } = await signIn({ ...signForm, password: encryptedPassword });
             console.log(user)
-            setUserInfo({ isAuthenticated: true, user });
 
-        } catch (error) {
-            console.log(error)
+            setUserInfo({isAuthenticated: true, user});
+        }
+        catch (error) {
+            if (error.status === 400) {
+                const {field, errorMessage} = await error.json()
+                 setErrorMessage({error: errorMessage})
+                }  
+            console.log(error.status)
         }
     }
 
@@ -59,6 +72,11 @@ export default function SignIn() {
                     placeholder="Password"
                     type="password"
                 ></input>
+                <br />
+                    {errorMessage.error &&  
+                    <span>{errorMessage.error}
+                    </span> }
+                <br />
                 <button>Sign In</button>
             </form>
         </div>
