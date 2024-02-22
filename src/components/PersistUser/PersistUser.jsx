@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import {whoAmI} from "../../api/authRoutes"
-import userContext from "../../contexts/userContext"
+import userContext, { newDefaultUserContextState } from "../../contexts/userContext"
 const PersistUser = ({children}) => {
     const {userInfo, setUserInfo} = useContext(userContext);
     const [isLoading, setIsLoading] = useState(false);
@@ -9,12 +9,12 @@ const PersistUser = ({children}) => {
         const getUser = async () => {
             try {
                 const {user} = await whoAmI();
-                console.log(user);
                 setUserInfo({
                     isAuthenticated: true,
                     user
                 });
             } catch (error) {
+                setUserInfo(newDefaultUserContextState());
                console.log(error); 
             }
             finally
@@ -22,7 +22,6 @@ const PersistUser = ({children}) => {
                 setIsLoading(false);
             }
         }
-        console.log(isLoading);
         if (!isLoading) {
             setIsLoading(true);
             getUser();
