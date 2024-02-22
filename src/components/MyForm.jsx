@@ -1,8 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { registerForm } from "../api/authRoutes"
 import userContext from "../contexts/userContext";
-import "../styles/MyForm.css"
 import CryptoJS from "crypto-js";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField'
+import { Typography } from '@mui/material';
 
 console.log(import.meta.env.VITE_KEY)
 
@@ -28,7 +30,12 @@ const MyForm = () => {
 
 
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.password)
-    return setErrorMessage ( {error: "All fields are required"})
+    return setErrorMessage ({
+      firstName: formData.firstName === "" ? "All fields are requiered": "",
+      lastName: formData.lastName === "" ? "All fields are requiered": "",
+      email: formData.email === "" ? "All fields are requiered": "",
+      password: formData.password === "" ? "All fields are requiered": ""
+  })
 
   const password = formData.password;
   const confirmPassword = formData.confirmPassword;
@@ -52,8 +59,8 @@ const MyForm = () => {
     console.log(error)
     if (error.status === 400) {
     const {field, errorMessage} = await error.json() 
-
-     setErrorMessage({error: errorMessage})
+console.log(field,errorMessage)
+     setErrorMessage({[field]: errorMessage})
     }  
     console.log(error.status)
 
@@ -64,40 +71,75 @@ const MyForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        First Name:
-        <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} />
-      </label>
-      <br />
-      <label>
-        Last Name:
-        <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} />
-      </label>
-      <br />
-      <label>
-        Email:
-        <input type="email" name="email" value={formData.email} onChange={handleChange} pattern="^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$"
-        title="Incorrect email structure" />
-      </label>
-      <br />
-      <label>
-        Password:
-        <input type="password" name="password" value={formData.password} onChange={handleChange} pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$"
-          title="Must contain at least one number and one uppercase and lowercase letter, and at least 5 or more characters" />
-      </label>
-      <br />
-      <label>
-        Confirm password:
-        <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
-      </label>
-      <br />
-      {errorMessage.error &&
-        <span>{errorMessage.error}
-        </span>}
+    <Box component="form" sx={{maxWidth: 200}} onSubmit={handleSubmit}>
+  <TextField 
+    id="firstName"
+    label="First Name"
+    variant="outlined"
+    name="firstName"
+    value={formData.firstName}
+    onChange={handleChange}
+    error={!!errorMessage.firstName}  
+    helperText={errorMessage.firstName}
+    fullWidth
+    margin='normal'
+    />  
+  <TextField 
+    id="lastName"
+    label="Last Name"
+    variant="outlined"
+    name="lastName"
+    value={formData.lastName}
+    onChange={handleChange}
+    error={!!errorMessage.lastName}  
+    helperText={errorMessage.lastName}
+    fullWidth
+    margin='normal'
+    />  
+    <TextField 
+    id="email"
+    label="Email"
+    variant="outlined"
+    name="mail"
+    value={formData.email}
+    onChange={handleChange}
+    inputProps={{pattern: "^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$"}}
+    error={!!errorMessage.email}
+    helperText={errorMessage.email}
+    fullWidth
+    margin='normal'
+    />  
+    <TextField
+    id="password"
+    label="Password"
+    variant="outlined"
+    name="password"
+    value={formData.password}
+    onChange={handleChange}
+    inputProps={{pattern:"($10<)(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" }}
+    error={!!errorMessage.password}
+    helperText={errorMessage.password}
+    fullWidth
+    margin='normal'
+    />
+       <TextField
+    id="confirmPassword"
+    label="Confirm Password"
+    variant="outlined"
+    name="confirmPassword"
+    value={formData.confirmPassword}
+    onChange={handleChange}
+    error={!!errorMessage.confirmPassword}
+    helperText={errorMessage.confirmPassword}
+    fullWidth
+    margin='normal'
+    />  
+      {errorMessage.server &&
+        <Typography color="error">{errorMessage.server}
+        </Typography>}
       <br />
       <button type="submit">Register</button>
-    </form>
+    </Box>
   );
 };
 
