@@ -16,6 +16,8 @@
     "@mui/icons-material": "^5.15.5",
     "@mui/material": "^5.15.5",
     "@testing-library/react": "^14.1.2",
+    "bcryptjs": "^2.4.3",
+    "crypto-js": "^4.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.3"

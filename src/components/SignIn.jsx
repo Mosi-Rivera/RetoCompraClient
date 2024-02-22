@@ -2,10 +2,11 @@ import React, { useContext, useState } from "react";
 import "../styles/Form.css"
 import { signIn } from "../api/authRoutes";
 import userContext from "../contexts/userContext";
+import CryptoJS from "crypto-js";
 
 
 export default function SignIn() {
-    const {setUserInfo} = useContext(userContext);
+    const { setUserInfo } = useContext(userContext);
 
     const [signForm, setSignForm] = useState({
         email: "",
@@ -30,10 +31,11 @@ export default function SignIn() {
 
     async function handleClick(event) {
         event.preventDefault();
+        const encryptedPassword = CryptoJS.AES.encrypt(signForm.password, import.meta.env.VITE_KEY).toString()
         try {
-            const {user} = await signIn(signForm);
+            const { user } = await signIn({ ...signForm, password: encryptedPassword });
             console.log(user)
-            setUserInfo({isAuthenticated: true, user});
+            setUserInfo({ isAuthenticated: true, user });
 
         } catch (error) {
             console.log(error)

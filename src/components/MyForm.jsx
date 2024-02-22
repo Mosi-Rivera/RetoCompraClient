@@ -1,12 +1,15 @@
 import React, { useContext, useState } from 'react';
-import { registerForm} from "../api/authRoutes"
+import { registerForm } from "../api/authRoutes"
 import userContext from "../contexts/userContext";
 import "../styles/MyForm.css"
+import CryptoJS from "crypto-js";
+
+console.log(import.meta.env.VITE_KEY)
 
 const MyForm = () => {
-  const {setUserInfo} = useContext(userContext);
+  const { setUserInfo } = useContext(userContext);
   const [formData, setFormData] = useState({
-    firstName: '', 
+    firstName: '',
     lastName: '',
     email: '',
     password: '',
@@ -23,21 +26,24 @@ const MyForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-  const password = formData.password;
- 
-  const confirmPassword = formData.confirmPassword;
+    const password = formData.password;
 
-    if (password !== confirmPassword){ 
-      setErrorMessage ( {error: "Confirm password does not match"});
-      console.log(password,confirmPassword)
-      return; 
+    const confirmPassword = formData.confirmPassword;
+
+    if (password !== confirmPassword) {
+      setErrorMessage({ error: "Confirm password does not match" });
+      console.log(password, confirmPassword)
+      return;
     }
-
+    const encryptedPassword = CryptoJS.AES.encrypt(formData.password, import.meta.env.VITE_KEY)
+    delete formData.confirmPassword
     try {
-      const {user} = await registerForm(formData);
+      const { user } = await registerForm({
+        ...formData, password: encryptedPassword.toString()
+      });
       console.log(user)
-      setUserInfo({isAuthenticated: true, user});
-  } catch (error) {
+      setUserInfo({ isAuthenticated: true, user });
+    } catch (error) {
       console.log(error)
     }
 
@@ -64,8 +70,8 @@ const MyForm = () => {
       <br />
       <label>
         Password:
-        <input type="password" name="password" value={formData.password} onChange={handleChange} pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$" 
-        title="Must contain at least one number and one uppercase and lowercase letter, and at least 5 or more characters" />
+        <input type="password" name="password" value={formData.password} onChange={handleChange} pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$"
+          title="Must contain at least one number and one uppercase and lowercase letter, and at least 5 or more characters" />
       </label>
       <br />
       <label>
@@ -73,10 +79,10 @@ const MyForm = () => {
         <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
       </label>
       <br />
-      {errorMessage.error &&  
+      {errorMessage.error &&
         <span>{errorMessage.error}
-        </span> }
-        <br />
+        </span>}
+      <br />
       <button type="submit">Register</button>
     </form>
   );
