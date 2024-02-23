@@ -1,8 +1,12 @@
 import React, { useContext, useState } from "react";
-import "../styles/Form.css"
 import { signIn } from "../api/authRoutes";
 import userContext from "../contexts/userContext";
 import CryptoJS from "crypto-js";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import { Typography } from "@mui/material";
+const defaultErrorState = { server: "", email: "", password: "" }
 
 
 export default function SignIn() {
@@ -12,73 +16,86 @@ export default function SignIn() {
         email: "",
         password: ""
     });
-    
-    const [errorMessage, setErrorMessage] = useState({
-        error: undefined
-      })
-    
-    
-    // this function will handle both inputs, by copying the singForm object, spreding it and adding the input name and value dynamically.
-    
-    
-    function handleChange(event) {
-        //this const deconstructured the event.target, to save space and readability.
-        const { name, value } = event.target;
 
-        //prevValue will take the object template on setSignForm, we will use that to plug in the new value.
+    const [errorMessage, setErrorMessage] = useState(defaultErrorState)
+
+    function handleChange(event) {
+        const { name, value } = event.target;
         setSignForm(prevValue => {
             return {
-                //...prevValue will spread the object, and will add what the user typed on the input ([name] = event.target.name, value = event.target.value)
                 ...prevValue,
                 [name]: value
             }
         })
     }
 
-    
-
-    async function handleClick(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
         const encryptedPassword = CryptoJS.AES.encrypt(signForm.password, import.meta.env.VITE_KEY).toString()
+        if (signForm.email === "" || signForm.password === "") {
+            setErrorMessage({
+                email: signForm.email === "" ? "all fields are required" : "",
+                password: signForm.password === "" ? "all fields are required" : ""
+            })
+            return
+        }
         try {
             const { user } = await signIn({ ...signForm, password: encryptedPassword });
-            console.log(user)
-
-            setUserInfo({isAuthenticated: true, user});
+            setUserInfo({ isAuthenticated: true, user });
         }
         catch (error) {
             if (error.status === 400) {
-                const {field, errorMessage} = await error.json()
-                 setErrorMessage({error: errorMessage})
-                }  
-            console.log(error.status)
+                const { field, errorMessage } = await error.json()
+                setErrorMessage({ ...defaultErrorState, [field]: errorMessage })
+                return
+            }
+            setErrorMessage({ ...defaultErrorState, server: "something went wrong, please try again" })
         }
     }
 
-
-
     return (
-        <div>
-            <form className="signin-form" onSubmit={handleClick}>
-                <input onChange={handleChange}
+        <>
+            <Box component="form" onSubmit={handleSubmit} width={200}>
+                <TextField
+                    id="outlined-basic"
+                    label="Email"
+                    variant="outlined"
                     name="email"
                     value={signForm.email}
-                    placeholder="Email"
+                    onChange={handleChange}
                     type="email"
-                ></input>
-                <input onChange={handleChange}
+                    size="normal"
+                    fullWidth
+                    helperText={errorMessage.email}
+                    error={!!errorMessage.email}
+                >
+                </TextField>
+                <TextField
+                    id="outlined-basic"
+                    label="Password"
+                    variant="outlined"
                     name="password"
                     value={signForm.password}
-                    placeholder="Password"
+                    onChange={handleChange}
                     type="password"
-                ></input>
-                <br />
-                    {errorMessage.error &&  
-                    <span>{errorMessage.error}
-                    </span> }
-                <br />
-                <button>Sign In</button>
-            </form>
-        </div>
+                    size="normal"
+                    fullWidth
+                    helperText={errorMessage.password}
+                    error={!!errorMessage.password}
+                >
+                </TextField>
+                {errorMessage.server &&
+                    <Typography color="error">{errorMessage.server}</Typography>
+                }
+                <Button
+                    variant="contained"
+                    size="normal"
+                    color="primary"
+                    fullWidth
+                    type="submit"
+                >Sign In
+                </Button>
+            </Box >
+        </>
     )
 }

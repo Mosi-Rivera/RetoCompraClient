@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { registerForm } from "../api/authRoutes"
 import userContext from "../contexts/userContext";
-import "../styles/MyForm.css"
+// import "../styles/MyForm.css"
 import CryptoJS from "crypto-js";
 
 console.log(import.meta.env.VITE_KEY)
@@ -28,10 +28,10 @@ const MyForm = () => {
 
 
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.password)
-    return setErrorMessage ( {error: "All fields are required"})
+      return setErrorMessage({ error: "All fields are required" })
 
-  const password = formData.password;
-  const confirmPassword = formData.confirmPassword;
+    const password = formData.password;
+    const confirmPassword = formData.confirmPassword;
 
     if (password !== confirmPassword) {
       setErrorMessage({ error: "Confirm password does not match" });
@@ -47,15 +47,15 @@ const MyForm = () => {
       console.log(user)
 
 
-      setUserInfo({isAuthenticated: true, user});
-  } catch (error) {
-    console.log(error)
-    if (error.status === 400) {
-    const {field, errorMessage} = await error.json() 
+      setUserInfo({ isAuthenticated: true, user });
+    } catch (error) {
+      console.log(error)
+      if (error.status === 400) {
+        const { field, errorMessage } = await error.json()
 
-     setErrorMessage({error: errorMessage})
-    }  
-    console.log(error.status)
+        setErrorMessage({ error: errorMessage })
+      }
+      console.log(error.status)
 
     }
 
@@ -78,7 +78,7 @@ const MyForm = () => {
       <label>
         Email:
         <input type="email" name="email" value={formData.email} onChange={handleChange} pattern="^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$"
-        title="Incorrect email structure" />
+          title="Incorrect email structure" />
       </label>
       <br />
       <label>

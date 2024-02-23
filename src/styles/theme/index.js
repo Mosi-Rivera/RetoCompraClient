@@ -10,6 +10,16 @@ const theme = createTheme({
       main: '#f50057',
     },
   },
+  components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          margin: "0",
+          padding: "0 0 1rem",
+        }
+      }
+    }
+  }
 });
 
 export default responsiveFontSizes(theme);
