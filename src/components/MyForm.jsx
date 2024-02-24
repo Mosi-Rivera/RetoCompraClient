@@ -12,13 +12,13 @@ import EmailValidator from "email-validator"
 
 const passwordSchema = new PasswordValidator();
 passwordSchema
-    .is().min(5)
-    .is().max(100)
-    .has().uppercase()
-    .has().lowercase()
-    .has().digits()
+  .is().min(5)
+  .is().max(100)
+  .has().uppercase()
+  .has().lowercase()
+  .has().digits()
 
-const defaultErrorState ={ server:"", email:"", password: "", firstName: "",lastName: "", confirmPassword: ""}
+const defaultErrorState = { server: "", email: "", password: "", firstName: "", lastName: "", confirmPassword: "" }
 
 console.log(import.meta.env.VITE_KEY)
 
@@ -38,43 +38,42 @@ const MyForm = () => {
   };
 
 
-  const handleSubmit = async (e) => { 
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
 
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.password)
-    return setErrorMessage ({
-      firstName: formData.firstName === "" ? "All fields are required": "",
-      lastName: formData.lastName === "" ? "All fields are required": "",
-      email: formData.email === "" ? "All fields are required": "",
-      password: formData.password === "" ? "All fields are required": "",
-      confirmPassword: formData.confirmPassword === "" ? "All fields are required": "",
-  })
-  
-  if (!EmailValidator.validate(formData.email) )
-  {
-    return setErrorMessage({...defaultErrorState, email:"Please enter valid email"})
-  } 
-  const password = formData.password;
-  const confirmPassword = formData.confirmPassword;
+      return setErrorMessage({
+        firstName: formData.firstName === "" ? "All fields are required" : "",
+        lastName: formData.lastName === "" ? "All fields are required" : "",
+        email: formData.email === "" ? "All fields are required" : "",
+        password: formData.password === "" ? "All fields are required" : "",
+        confirmPassword: formData.confirmPassword === "" ? "All fields are required" : "",
+      })
+
+    if (!EmailValidator.validate(formData.email)) {
+      return setErrorMessage({ ...defaultErrorState, email: "Please enter valid email" })
+    }
+    const password = formData.password;
+    const confirmPassword = formData.confirmPassword;
 
 
-  if (!passwordSchema.validate(password) )
-  {
-    return setErrorMessage({...defaultErrorState, password:"Must be at least 5 characters, contain lowercase, uppercase and number"})
-  } 
+    if (!passwordSchema.validate(password)) {
+      return setErrorMessage({ ...defaultErrorState, password: "Must be at least 5 characters, contain lowercase, uppercase and number" })
+    }
 
 
     if (password !== confirmPassword) {
-      setErrorMessage({...defaultErrorState, confirmPassword: "Confirm password does not match"});
+      setErrorMessage({ ...defaultErrorState, confirmPassword: "Confirm password does not match" });
       console.log(password, confirmPassword)
       return;
     }
     const encryptedPassword = CryptoJS.AES.encrypt(formData.password, import.meta.env.VITE_KEY)
-    delete formData.confirmPassword
+    const { confirmPassword: _, ...newFormData } = formData
+
     try {
       const { user } = await registerForm({
-        ...formData, password: encryptedPassword.toString()
+        ...newFormData, password: encryptedPassword.toString()
       });
       console.log(user)
 
@@ -85,11 +84,11 @@ const MyForm = () => {
       if (error.status === 400) {
         const { field, errorMessage } = await error.json()
 
-console.log(field,errorMessage)
-     setErrorMessage({...defaultErrorState,[field]: errorMessage})
-    } 
-    setErrorMessage(defaultErrorState)
-    console.log(error.status)
+        console.log(field, errorMessage)
+        return setErrorMessage({ ...defaultErrorState, [field]: errorMessage })
+      }
+      setErrorMessage(defaultErrorState)
+      console.log(error.status)
     }
 
 
@@ -97,90 +96,90 @@ console.log(field,errorMessage)
     console.log('Form submitted:', formData);
   };
 
-  return (  
-    <Box component="form" sx={{maxWidth: 200}} onSubmit={handleSubmit}>
-  <TextField 
-    id="firstName"
-    label="First Name"
-    variant="outlined"
-    name="firstName"
-    value={formData.firstName}
-    onChange={handleChange}
-    error={!!errorMessage.firstName}  
-    helperText={errorMessage.firstName}
-    fullWidth
-    margin='normal'
-    size="normal"
-    />  
-  <TextField 
-    id="lastName"
-    label="Last Name"
-    variant="outlined"
-    name="lastName"
-    value={formData.lastName}
-    onChange={handleChange}
-    error={!!errorMessage.lastName}  
-    helperText={errorMessage.lastName}
-    fullWidth
-    margin='normal'
-    size="normal"
+  return (
+    <Box component="form" sx={{ maxWidth: 200 }} onSubmit={handleSubmit}>
+      <TextField
+        id="firstName"
+        label="First Name"
+        variant="outlined"
+        name="firstName"
+        value={formData.firstName}
+        onChange={handleChange}
+        error={!!errorMessage.firstName}
+        helperText={errorMessage.firstName}
+        fullWidth
+        margin='normal'
+        size="normal"
+      />
+      <TextField
+        id="lastName"
+        label="Last Name"
+        variant="outlined"
+        name="lastName"
+        value={formData.lastName}
+        onChange={handleChange}
+        error={!!errorMessage.lastName}
+        helperText={errorMessage.lastName}
+        fullWidth
+        margin='normal'
+        size="normal"
 
-    />  
-    <TextField 
-    id="email"
-    label="Email"
-    variant="outlined"
-    name="email"
-    value={formData.email}
-    onChange={handleChange}
-    error={!!errorMessage.email}
-    helperText={errorMessage.email}
-    fullWidth
-    margin='normal'
-    size="normal"
-    type="email"
+      />
+      <TextField
+        id="email"
+        label="Email"
+        variant="outlined"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        error={!!errorMessage.email}
+        helperText={errorMessage.email}
+        fullWidth
+        margin='normal'
+        size="normal"
+        type="email"
 
-    />  
-    <TextField
-    id="password"
-    label="Password"
-    variant="outlined"
-    name="password"
-    value={formData.password}
-    type="password"
-    onChange={handleChange}
-    error={!!errorMessage.password}
-    helperText={errorMessage.password}
-    fullWidth
-    margin='normal'
-    size="normal"
+      />
+      <TextField
+        id="password"
+        label="Password"
+        variant="outlined"
+        name="password"
+        value={formData.password}
+        type="password"
+        onChange={handleChange}
+        error={!!errorMessage.password}
+        helperText={errorMessage.password}
+        fullWidth
+        margin='normal'
+        size="normal"
 
-    />
-       <TextField
-    id="confirmPassword"
-    label="Confirm Password"
-    variant="outlined"
-    name="confirmPassword"
-    value={formData.confirmPassword}
-    type="password"
-    onChange={handleChange}
-    error={!!errorMessage.confirmPassword}
-    helperText={errorMessage.confirmPassword}
-    fullWidth
-    margin='normal'
-    size="normal"
+      />
+      <TextField
+        id="confirmPassword"
+        label="Confirm Password"
+        variant="outlined"
+        name="confirmPassword"
+        value={formData.confirmPassword}
+        type="password"
+        onChange={handleChange}
+        error={!!errorMessage.confirmPassword}
+        helperText={errorMessage.confirmPassword}
+        fullWidth
+        margin='normal'
+        size="normal"
 
-    />  
+      />
       {errorMessage.server &&
         <Typography color="error">{errorMessage.server}
         </Typography>}
       <br />
-      <Button 
-      variant="contained"
-      size="normal"
-      color="secondary"
-      fullWidth
-      type="submit"
+      <Button
+        variant="contained"
+        size="normal"
+        color="secondary"
+        fullWidth
+        type="submit"
       > Register</Button>
     </Box>
   );
