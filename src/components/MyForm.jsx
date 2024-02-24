@@ -5,6 +5,20 @@ import CryptoJS from "crypto-js";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField'
 import { Typography } from '@mui/material';
+import Button from '@mui/material/Button';
+import PasswordValidator from "password-validator"
+import EmailValidator from "email-validator"
+
+
+const passwordSchema = new PasswordValidator();
+passwordSchema
+    .is().min(5)
+    .is().max(100)
+    .has().uppercase()
+    .has().lowercase()
+    .has().digits()
+
+const defaultErrorState ={ server:"", email:"", password: "", firstName: "",lastName: "", confirmPassword: ""}
 
 console.log(import.meta.env.VITE_KEY)
 
@@ -17,31 +31,41 @@ const MyForm = () => {
     password: '',
     confirmPassword: ''
   });
-  const [errorMessage, setErrorMessage] = useState({
-    error: undefined
-  })
+  const [errorMessage, setErrorMessage] = useState(defaultErrorState)
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+
+  const handleSubmit = async (e) => { 
     e.preventDefault();
 
 
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.password)
     return setErrorMessage ({
-      firstName: formData.firstName === "" ? "All fields are requiered": "",
-      lastName: formData.lastName === "" ? "All fields are requiered": "",
-      email: formData.email === "" ? "All fields are requiered": "",
-      password: formData.password === "" ? "All fields are requiered": ""
+      firstName: formData.firstName === "" ? "All fields are required": "",
+      lastName: formData.lastName === "" ? "All fields are required": "",
+      email: formData.email === "" ? "All fields are required": "",
+      password: formData.password === "" ? "All fields are required": "",
+      confirmPassword: formData.confirmPassword === "" ? "All fields are required": "",
   })
-
+  
+  if (!EmailValidator.validate(formData.email) )
+  {
+    return setErrorMessage({...defaultErrorState, email:"Please enter valid email"})
+  } 
   const password = formData.password;
   const confirmPassword = formData.confirmPassword;
 
+  if (!passwordSchema.validate(password) )
+  {
+    return setErrorMessage({...defaultErrorState, password:"Must be at least 5 characters, contain lowercase, uppercase and number"})
+  } 
+
+
     if (password !== confirmPassword) {
-      setErrorMessage({ error: "Confirm password does not match" });
+      setErrorMessage({...defaultErrorState, confirmPassword: "Confirm password does not match"});
       console.log(password, confirmPassword)
       return;
     }
@@ -59,18 +83,21 @@ const MyForm = () => {
     console.log(error)
     if (error.status === 400) {
     const {field, errorMessage} = await error.json() 
-console.log(field,errorMessage)
-     setErrorMessage({[field]: errorMessage})
-    }  
-    console.log(error.status)
 
+console.log(field,errorMessage)
+     setErrorMessage({...defaultErrorState,[field]: errorMessage})
+    } 
+    setErrorMessage(defaultErrorState)
+    console.log(error.status)
     }
+
 
     // Add logic to handle form submission
     console.log('Form submitted:', formData);
   };
 
-  return (
+
+  return (  
     <Box component="form" sx={{maxWidth: 200}} onSubmit={handleSubmit}>
   <TextField 
     id="firstName"
@@ -83,6 +110,7 @@ console.log(field,errorMessage)
     helperText={errorMessage.firstName}
     fullWidth
     margin='normal'
+    size="normal"
     />  
   <TextField 
     id="lastName"
@@ -95,19 +123,23 @@ console.log(field,errorMessage)
     helperText={errorMessage.lastName}
     fullWidth
     margin='normal'
+    size="normal"
+
     />  
     <TextField 
     id="email"
     label="Email"
     variant="outlined"
-    name="mail"
+    name="email"
     value={formData.email}
     onChange={handleChange}
-    inputProps={{pattern: "^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$"}}
     error={!!errorMessage.email}
     helperText={errorMessage.email}
     fullWidth
     margin='normal'
+    size="normal"
+    type="email"
+
     />  
     <TextField
     id="password"
@@ -115,12 +147,14 @@ console.log(field,errorMessage)
     variant="outlined"
     name="password"
     value={formData.password}
+    type="password"
     onChange={handleChange}
-    inputProps={{pattern:"($10<)(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" }}
     error={!!errorMessage.password}
     helperText={errorMessage.password}
     fullWidth
     margin='normal'
+    size="normal"
+
     />
        <TextField
     id="confirmPassword"
@@ -128,17 +162,26 @@ console.log(field,errorMessage)
     variant="outlined"
     name="confirmPassword"
     value={formData.confirmPassword}
+    type="password"
     onChange={handleChange}
     error={!!errorMessage.confirmPassword}
     helperText={errorMessage.confirmPassword}
     fullWidth
     margin='normal'
+    size="normal"
+
     />  
       {errorMessage.server &&
         <Typography color="error">{errorMessage.server}
         </Typography>}
       <br />
-      <button type="submit">Register</button>
+      <Button 
+      variant="contained"
+      size="normal"
+      color="secondary"
+      fullWidth
+      type="submit"
+      > Register</Button>
     </Box>
   );
 };
