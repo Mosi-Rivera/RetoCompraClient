@@ -58,6 +58,7 @@ const MyForm = () => {
   const password = formData.password;
   const confirmPassword = formData.confirmPassword;
 
+
   if (!passwordSchema.validate(password) )
   {
     return setErrorMessage({...defaultErrorState, password:"Must be at least 5 characters, contain lowercase, uppercase and number"})
@@ -78,11 +79,11 @@ const MyForm = () => {
       console.log(user)
 
 
-      setUserInfo({isAuthenticated: true, user});
-  } catch (error) {
-    console.log(error)
-    if (error.status === 400) {
-    const {field, errorMessage} = await error.json() 
+      setUserInfo({ isAuthenticated: true, user });
+    } catch (error) {
+      console.log(error)
+      if (error.status === 400) {
+        const { field, errorMessage } = await error.json()
 
 console.log(field,errorMessage)
      setErrorMessage({...defaultErrorState,[field]: errorMessage})
@@ -95,7 +96,6 @@ console.log(field,errorMessage)
     // Add logic to handle form submission
     console.log('Form submitted:', formData);
   };
-
 
   return (  
     <Box component="form" sx={{maxWidth: 200}} onSubmit={handleSubmit}>

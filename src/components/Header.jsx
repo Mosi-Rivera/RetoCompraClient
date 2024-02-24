@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import "../styles/Header.css"
+// import "../styles/Header.css"
 import { Outlet, NavLink } from "react-router-dom";
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -23,11 +23,11 @@ import SignIn from "./SignIn";
 import DropdownMenuButton from "./DropdownMenuButton";
 import { logout } from "../api/authRoutes";
 
-const AuthenticatedNav = ({firstName, lastName, role, handleLogout}) => {
+const AuthenticatedNav = ({ firstName, lastName, role, handleLogout }) => {
     const buttons = [
-        {content: <Typography>Account Details</Typography>},
-        {content: <Typography>Order History</Typography>},
-        {content: <Typography>Logout</Typography>, onClick: handleLogout},
+        { content: <Typography>Account Details</Typography> },
+        { content: <Typography>Order History</Typography> },
+        { content: <Typography>Logout</Typography>, onClick: handleLogout },
     ];
     if (role === 'admin') {
         buttons.unshift({
@@ -35,13 +35,13 @@ const AuthenticatedNav = ({firstName, lastName, role, handleLogout}) => {
         });
     }
     return (
-        <nav style={{display: "flex"}}>
-            <DropdownMenuButton 
-                sx={{color: "white", maxWidth: '150px'}}
+        <nav style={{ display: "flex" }}>
+            <DropdownMenuButton
+                sx={{ color: "white", maxWidth: '150px' }}
                 buttons={buttons}
                 buttonContent={
-                    <><AccountCircle /> <Typography textOverflow={"ellipsis"} overflow={"clip"} style={{marginLeft: ".25rem", fontSize: "1rem"}}>{firstName}</Typography></>
-            }/>
+                    <><AccountCircle /> <Typography textOverflow={"ellipsis"} overflow={"clip"} style={{ marginLeft: ".25rem", fontSize: "1rem" }}>{firstName}</Typography></>
+                } />
         </nav>
     );
 }
@@ -52,14 +52,14 @@ const NotAuthenticatedNav = () => {
     return (
         <nav>
             <Modal
-                open={showRegister} 
+                open={showRegister}
                 handleOpen={() => setShowRegister(true)}
                 handleClose={() => setShowRegister(false)}
                 buttonText="Register"
                 title="Register"
-                buttonSx={{color: "white"}}
+                buttonSx={{ color: "white" }}
             >
-                <MyForm/>
+                <MyForm />
             </Modal>
             <Modal
                 open={showLogin}
@@ -67,17 +67,17 @@ const NotAuthenticatedNav = () => {
                 handleClose={() => setShowLogin(false)}
                 buttonText="Login"
                 title="Login"
-                buttonSx={{color: "white"}}
+                buttonSx={{ color: "white" }}
             >
-                <SignIn/>
+                <SignIn />
             </Modal>
         </nav >
     );
-    
+
 }
 
 const Header = (props) => {
-    const {userInfo, setUserInfo} = useContext(userContext);
+    const { userInfo, setUserInfo } = useContext(userContext);
     const handleLogout = async () => {
         try {
             await logout();
@@ -86,7 +86,7 @@ const Header = (props) => {
             console.log(error);
         }
     }
-    
+
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -179,9 +179,9 @@ const Header = (props) => {
                         </IconButton>
                     </Box>
                     <div>
-                        { userInfo.isAuthenticated ?
-                            <AuthenticatedNav handleLogout={handleLogout} role={userInfo.user.role} firstName={userInfo.user.firstName} lastName={userInfo.user.lastName}/> :
-                            <NotAuthenticatedNav/>
+                        {userInfo.isAuthenticated ?
+                            <AuthenticatedNav handleLogout={handleLogout} role={userInfo.user.role} firstName={userInfo.user.firstName} lastName={userInfo.user.lastName} /> :
+                            <NotAuthenticatedNav />
                         }
                         <div>
                             <Outlet />
