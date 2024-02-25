@@ -133,7 +133,7 @@ const Header = (props) => {
             <Box sx={{ flexGrow: 1 }} />
             <AppBar >
                 <Toolbar>
-                    <IconButton
+                    {/* <IconButton
                         size="large"
                         edge="start"
                         color="inherit"
@@ -141,15 +141,21 @@ const Header = (props) => {
                         sx={{ mr: 2 }}
                     >
                         <MenuIcon />
-                    </IconButton>
+                    </IconButton> */}
                     <Typography
                         variant="h6"
                         noWrap
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}
                     >
-                        Clothing Store
+                        Graphic Groove
                     </Typography>
+                   
+                    <Box sx={{ marginLeft: 1 }} >
+                        <NavLink to="/" style={{margin: "0 1rem"}}>Men</NavLink>
+                        <NavLink to="/">Women</NavLink>
+
+                    </Box>
                     <Box sx={{ flexGrow: 1 }} />
                     <Search>
                         <SearchIconWrapper>
@@ -164,20 +170,20 @@ const Header = (props) => {
 
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="error">
+                            <Badge badgeContent={0} color="error">
                                 <ShoppingCartIcon />
                             </Badge>
                         </IconButton>
-                        <IconButton
+                        {/* <IconButton
                             size="large"
                             aria-label="show 17 new notifications"
                             color="inherit"
                         >
-                            <Badge badgeContent={17} color="error">
+                            <Badge badgeContent={0} color="error">
                                 <NotificationsIcon />
                             </Badge>
-                        </IconButton>
-                    </Box>
+                        </IconButton> */}
+                    </Box> 
                     <div>
                         {userInfo.isAuthenticated ?
                             <AuthenticatedNav handleLogout={handleLogout} role={userInfo.user.role} firstName={userInfo.user.firstName} lastName={userInfo.user.lastName} /> :

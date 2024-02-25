@@ -90,7 +90,7 @@ export default function SignIn() {
                 <Button
                     variant="contained"
                     size="normal"
-                    color="primary"
+                    color="secondary"
                     fullWidth
                     type="submit"
                 >Sign In
