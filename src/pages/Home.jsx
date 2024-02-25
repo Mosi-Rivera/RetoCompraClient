@@ -13,24 +13,21 @@ const Home = () => {
       <main>
         <section className="full" style={{
           width: '100%',
-          paddingTop: "56px",
+          height: "1280px",
           maxHeight: "100vh",
-          overflow: 'hidden'
+          overflow: 'hidden',
+          backgroundImage: "url(/public/assets/Background.jpg)",
+          backgroundSize: "cover",
+  
         }}>
-          <video preload="auto" autoPlay muted loop style={{
-            objectFit: 'cover',
-            width: '100%',
-            height: '100%',
-            display: "block",
-            overflow: "hidden",
-          }} src="/assets/video_of_women_modelling (1080p).mp4" type="video/mp4" />
+          
         </section>
         <section>
           <h2 style={{ textAlign: 'center' }}>Popular Products</h2>
           <DisplayProducts fetchMethod={getProducts} defaultSort="popular" defaultLimit={4} />
         </section>
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </Container>
   );
 }
