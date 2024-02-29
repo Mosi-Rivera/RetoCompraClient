@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-// import "../styles/Header.css"
 import { Outlet, NavLink } from "react-router-dom";
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -11,14 +10,11 @@ import Typography from '@mui/material/Typography';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Modal from "./Modal/Modal";
 import userContext, { newDefaultUserContextState } from "../contexts/userContext";
 import MyForm from "./MyForm";
-import { Button } from "@mui/material";
 import SignIn from "./SignIn";
 import DropdownMenuButton from "./DropdownMenuButton";
 import { logout } from "../api/authRoutes";
@@ -150,9 +146,9 @@ const Header = (props) => {
                     >
                         Graphic Groove
                     </Typography>
-                   
+
                     <Box sx={{ marginLeft: 1 }} >
-                        <NavLink to="/" style={{margin: "0 1rem"}}>Men</NavLink>
+                        <NavLink to="/" style={{ margin: "0 1rem" }}>Men</NavLink>
                         <NavLink to="/">Women</NavLink>
 
                     </Box>
@@ -183,7 +179,7 @@ const Header = (props) => {
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton> */}
-                    </Box> 
+                    </Box>
                     <div>
                         {userInfo.isAuthenticated ?
                             <AuthenticatedNav handleLogout={handleLogout} role={userInfo.user.role} firstName={userInfo.user.firstName} lastName={userInfo.user.lastName} /> :
