@@ -9,6 +9,10 @@ const theme = createTheme({
     secondary: {
       main: '#2D9596',
     },
+    searchBackground: {
+      main: '#DDE6ED'      
+    }
+
 
   },
   components: {

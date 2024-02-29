@@ -18,7 +18,9 @@ import MyForm from "./MyForm";
 import SignIn from "./SignIn";
 import DropdownMenuButton from "./DropdownMenuButton";
 import { logout } from "../api/authRoutes";
-
+import {grey} from "@mui/material/colors"
+import { useTheme } from "@emotion/react";
+ 
 const AuthenticatedNav = ({ firstName, lastName, role, handleLogout }) => {
     const buttons = [
         { content: <Typography>Account Details</Typography> },
@@ -73,6 +75,10 @@ const NotAuthenticatedNav = () => {
 }
 
 const Header = (props) => {
+const theme = useTheme()
+    
+    console.log(theme.palette.searchBackground)
+
     const { userInfo, setUserInfo } = useContext(userContext);
     const handleLogout = async () => {
         try {
@@ -111,6 +117,7 @@ const Header = (props) => {
 
     const StyledInputBase = styled(InputBase)(({ theme }) => ({
         color: 'inherit',
+        width: "100%",
         '& .MuiInputBase-input': {
             padding: theme.spacing(1, 1, 1, 0),
             // vertical padding + font size from searchIcon
@@ -118,7 +125,7 @@ const Header = (props) => {
             transition: theme.transitions.create('width'),
             width: '100%',
             [theme.breakpoints.up('md')]: {
-                width: '50ch',
+                width: '270ch',
             },
         },
     }));
@@ -127,7 +134,7 @@ const Header = (props) => {
     return (
         <header>
             <Box sx={{ flexGrow: 1 }} />
-            <AppBar >
+            <AppBar elevation={0} >
                 <Toolbar>
                     {/* <IconButton
                         size="large"
@@ -138,6 +145,13 @@ const Header = (props) => {
                     >
                         <MenuIcon />
                     </IconButton> */}
+                     <Box sx={{ marginLeft: 1 }} >
+                        <NavLink to="/" style={{ margin: "0 1rem" }}>Men</NavLink>
+                        <NavLink to="/">Women</NavLink>
+                    </Box>
+                    <Box sx={{ flexGrow: 1 }} />
+
+
                     <Typography
                         variant="h6"
                         noWrap
@@ -146,24 +160,10 @@ const Header = (props) => {
                     >
                         Graphic Groove
                     </Typography>
-
-                    <Box sx={{ marginLeft: 1 }} >
-                        <NavLink to="/" style={{ margin: "0 1rem" }}>Men</NavLink>
-                        <NavLink to="/">Women</NavLink>
-
-                    </Box>
-                    <Box sx={{ flexGrow: 1 }} />
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
                     <Box sx={{ flexGrow: 1 }} />
 
+ 
+                   
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                             <Badge badgeContent={0} color="error">
@@ -190,6 +190,18 @@ const Header = (props) => {
                         </div>
                     </div>
                 </Toolbar>
+                <Box sx={{backgroundColor: theme.palette.searchBackground.main}}>
+                <Search sx={{width: "100%"}}>
+                        <SearchIconWrapper color="black"  > 
+                            <SearchIcon color="primary" />
+                        </SearchIconWrapper>
+                        <StyledInputBase fullWidth sx={{ backgroundColor: "transparent", color: "black", width: "100%"}}
+                            placeholder="Search…"
+                            inputProps={{ 'aria-label': 'search' }}
+                            
+                        />
+                    </Search>
+                </Box>
             </AppBar>
         </header >
     )
