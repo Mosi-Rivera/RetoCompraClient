@@ -15,6 +15,7 @@ function App() {
         <PersistUser>
           <Routes>
             <Route path='*' element={<Home />} />
+            <Route path='/women' element={<Home />} />
             {/* <Route path= "/Crud" element={<CrudProducts/>} /> */}
           </Routes>
         </PersistUser>
