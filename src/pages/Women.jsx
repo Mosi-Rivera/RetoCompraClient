@@ -10,7 +10,7 @@ export default function Women() {
 
 
     return (
-        <Container maxWidth={false} sx={{ maxWidth: 1400, paddingTop: "95px" }}>
+        <Container maxWidth={false} sx={{ maxWidth: 1400, paddingTop: "95px", textAlign: 'left'  }}>
             <Header />
             <main>
                 {/* <section>
@@ -45,7 +45,7 @@ export default function Women() {
                 </section> */}
                 <section>
                     <h2 style={{ textAlign: 'left' }}>Women</h2>
-                    <DisplayProducts fetchMethod={(options) => getProducts({ ...options, section: "women" })} defaultSort="popular" defaultLimit={24} pagination={true} filter={true} />
+                    <DisplayProducts fetchMethod={(options) => getProducts({ ...options, section: "women" })} defaultLimit={24} pagination={true} filter={true} />
                 </section>
             </main>
             {/* <Footer /> */}

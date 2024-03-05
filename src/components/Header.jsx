@@ -147,11 +147,12 @@ const theme = useTheme()
                     </IconButton> */}
                      <Box sx={{ marginLeft: 1 }} >
                         <NavLink to="/" style={{ margin: "0 1rem" }}>Men</NavLink>
-                        <NavLink to="/">Women</NavLink>
+                        <NavLink to="/women">Women</NavLink>
                     </Box>
                     <Box sx={{ flexGrow: 1 }} />
 
 
+                    <NavLink to="/">
                     <Typography
                         variant="h6"
                         noWrap
@@ -159,7 +160,10 @@ const theme = useTheme()
                         sx={{ display: { xs: 'none', sm: 'block' } }}
                     >
                         Graphic Groove
+
                     </Typography>
+                    </NavLink>
+
                     <Box sx={{ flexGrow: 1 }} />
 
  

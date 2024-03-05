@@ -5,6 +5,7 @@ import UserProvider from './components/UserProvider/UserProvider';
 import PersistUser from './components/PersistUser/PersistUser';
 import Home from './pages/Home';
 import {CrudProducts} from './components/CrudProducts';
+import Women from './pages/Women'
 
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
         <PersistUser>
           <Routes>
             <Route path='*' element={<Home />} />
-            <Route path='/women' element={<Home />} />
+            <Route path='/women' element={<Women />} />
             {/* <Route path= "/Crud" element={<CrudProducts/>} /> */}
           </Routes>
         </PersistUser>
