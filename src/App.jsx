@@ -4,7 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserProvider from './components/UserProvider/UserProvider';
 import PersistUser from './components/PersistUser/PersistUser';
 import Home from './pages/Home';
-import {CrudProducts} from './components/CrudProducts';
+import Men from './pages/Men';
+import { CrudProducts } from './components/CrudProducts';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <PersistUser>
           <Routes>
             <Route path='*' element={<Home />} />
+            <Route path='/men' element={<Men />} />
             {/* <Route path= "/Crud" element={<CrudProducts/>} /> */}
           </Routes>
         </PersistUser>
