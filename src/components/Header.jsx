@@ -18,9 +18,9 @@ import MyForm from "./MyForm";
 import SignIn from "./SignIn";
 import DropdownMenuButton from "./DropdownMenuButton";
 import { logout } from "../api/authRoutes";
-import {grey} from "@mui/material/colors"
+import { grey } from "@mui/material/colors"
 import { useTheme } from "@emotion/react";
- 
+
 const AuthenticatedNav = ({ firstName, lastName, role, handleLogout }) => {
     const buttons = [
         { content: <Typography>Account Details</Typography> },
@@ -75,8 +75,8 @@ const NotAuthenticatedNav = () => {
 }
 
 const Header = (props) => {
-const theme = useTheme()
-    
+    const theme = useTheme()
+
     console.log(theme.palette.searchBackground)
 
     const { userInfo, setUserInfo } = useContext(userContext);
@@ -145,8 +145,10 @@ const theme = useTheme()
                     >
                         <MenuIcon />
                     </IconButton> */}
+
                      <Box sx={{ marginLeft: 1 }} >
                         <NavLink to="/" style={{ margin: "0 1rem" }}>Men</NavLink>
+                        <NavLink to="/men" style={{ margin: "0 1rem" }}>Men</NavLink>
                         <NavLink to="/women">Women</NavLink>
                     </Box>
                     <Box sx={{ flexGrow: 1 }} />
@@ -166,8 +168,8 @@ const theme = useTheme()
 
                     <Box sx={{ flexGrow: 1 }} />
 
- 
-                   
+
+
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                             <Badge badgeContent={0} color="error">
@@ -194,15 +196,15 @@ const theme = useTheme()
                         </div>
                     </div>
                 </Toolbar>
-                <Box sx={{backgroundColor: theme.palette.searchBackground.main}}>
-                <Search sx={{width: "100%"}}>
-                        <SearchIconWrapper color="black"  > 
+                <Box sx={{ backgroundColor: theme.palette.searchBackground.main }}>
+                    <Search sx={{ width: "100%" }}>
+                        <SearchIconWrapper color="black"  >
                             <SearchIcon color="primary" />
                         </SearchIconWrapper>
-                        <StyledInputBase fullWidth sx={{ backgroundColor: "transparent", color: "black", width: "100%"}}
+                        <StyledInputBase fullWidth sx={{ backgroundColor: "transparent", color: "black", width: "100%" }}
                             placeholder="Search…"
                             inputProps={{ 'aria-label': 'search' }}
-                            
+
                         />
                     </Search>
                 </Box>
