@@ -20,9 +20,6 @@ import DropdownMenuButton from "./DropdownMenuButton";
 import { logout } from "../api/authRoutes";
 import { grey } from "@mui/material/colors"
 import { useTheme } from "@emotion/react";
-// // import searchProduct from "../pages/SearchProduct";
-// import React, { useState } from 'react';
-// import axios from 'axios';
 
 const AuthenticatedNav = ({ firstName, lastName, role, handleLogout }) => {
     const buttons = [
@@ -187,7 +184,9 @@ const Header = (props) => {
                     >
                         <MenuIcon />
                     </IconButton> */}
+
                     <Box sx={{ marginLeft: 1 }} >
+
                         <NavLink to="/men" style={{ margin: "0 1rem" }}>Men</NavLink>
                         <NavLink to="/women">Women</NavLink>
                     </Box>

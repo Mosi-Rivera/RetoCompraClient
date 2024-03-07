@@ -1,4 +1,3 @@
-// Product.js
 import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -31,8 +30,10 @@ const ProductContent = styled(Box)({
 });
 
 const Product = ({ product }) => {
-  const { assets, name, brand, price, _id } = product;
-  const thumbnail = assets && assets.thumbnail ? assets.thumbnail : '';
+  const { assets, product: product_info, price, _id } = product;
+  const brand = product_info?.brand ? product_info.brand : '';
+  const name = product_info?.name ? product_info.name : '';
+  const thumbnail = assets?.thumbnail ? assets.thumbnail : '';
 
   return (<NavLink to={`/product/${_id}`}>
         <ProductContainer data-testId='product-container'>

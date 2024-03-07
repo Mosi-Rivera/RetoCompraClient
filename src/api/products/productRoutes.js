@@ -12,17 +12,30 @@ import { ORIGIN_URL } from "../environment"
 @param {Number=} params.maxPrice - Maximum price of products to return
 */
 export const getProducts = async (params) => {
-    try
-    {
+    try {
         const queryStr = '?' + (new URLSearchParams(params)).toString();
+        console.log(params)
+        console.log(queryStr)
+        console.log(new URLSearchParams())
+        console.log(new URLSearchParams(params))
+        console.log(new URLSearchParams(params).toString())
         const response = await fetch(ORIGIN_URL + '/api/products' + queryStr);
         if (response.ok)
             return response.json();
         else
-            Promise.reject(response);
+            return Promise.reject(response);
     }
-    catch(err)
-    {
+    catch (err) {
         console.log(err);
     }
+}
+
+
+export const getSearchedProduct = async (params, searchText) => {
+    const queryStr = '?' + (new URLSearchParams(params)).toString();
+    const response = await fetch(ORIGIN_URL + '/api/products/search/' + searchText + queryStr);
+    if (response.ok)
+        return response.json();
+    else
+        return Promise.reject(response);
 }
