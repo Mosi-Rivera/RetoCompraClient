@@ -4,8 +4,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserProvider from './components/UserProvider/UserProvider';
 import PersistUser from './components/PersistUser/PersistUser';
 import Home from './pages/Home';
-import {CrudProducts} from './components/CrudProducts';
-import Women from './pages/Women'
+import Men from './pages/Men';
+import Women from './pages/Women';
+import SearchProduct from './pages/SearchProduct'
+import { CrudProducts } from './components/CrudProducts';
 
 
 function App() {
@@ -16,7 +18,9 @@ function App() {
         <PersistUser>
           <Routes>
             <Route path='*' element={<Home />} />
+            <Route path='/men' element={<Men />} />
             <Route path='/women' element={<Women />} />
+            <Route path='/search/:searchText' element={<SearchProduct />} />
             {/* <Route path= "/Crud" element={<CrudProducts/>} /> */}
           </Routes>
         </PersistUser>

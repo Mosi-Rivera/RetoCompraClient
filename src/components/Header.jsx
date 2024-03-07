@@ -18,9 +18,12 @@ import MyForm from "./MyForm";
 import SignIn from "./SignIn";
 import DropdownMenuButton from "./DropdownMenuButton";
 import { logout } from "../api/authRoutes";
-import {grey} from "@mui/material/colors"
+import { grey } from "@mui/material/colors"
 import { useTheme } from "@emotion/react";
- 
+// // import searchProduct from "../pages/SearchProduct";
+// import React, { useState } from 'react';
+// import axios from 'axios';
+
 const AuthenticatedNav = ({ firstName, lastName, role, handleLogout }) => {
     const buttons = [
         { content: <Typography>Account Details</Typography> },
@@ -75,8 +78,8 @@ const NotAuthenticatedNav = () => {
 }
 
 const Header = (props) => {
-const theme = useTheme()
-    
+    const theme = useTheme()
+
     console.log(theme.palette.searchBackground)
 
     const { userInfo, setUserInfo } = useContext(userContext);
@@ -103,7 +106,46 @@ const theme = useTheme()
             marginLeft: theme.spacing(3),
             width: 'auto',
         },
+
     }));
+
+// const searchProduct = () => {
+//   const [searchQuery, setSearchQuery] = useState('');
+//   const [products, setProducts] = useState([]);
+
+//   const handleSearch = async () => {
+//     try {
+//       const response = await axios.get(`/api/products/search?q=${searchQuery}`);
+//       setProducts(response.data);
+//     } catch (error) {
+//       console.error('Error fetching products:', error);
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <input
+//         type="text"
+//         value={searchQuery}
+//         onChange={(e) => setSearchQuery(e.target.value)}
+//       />
+//       <button onClick={handleSearch}>Search</button>
+//       <ul>
+//         {products.map((product) => (
+//           <li key={product._id}>
+//             <h3>{product.name}</h3>
+//             <p>{product.description}</p>
+//             <p>Price: {product.price}</p>
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// };
+
+// export default Search;
+
+ 
 
     const SearchIconWrapper = styled('div')(({ theme }) => ({
         padding: theme.spacing(0, 2),
@@ -145,8 +187,8 @@ const theme = useTheme()
                     >
                         <MenuIcon />
                     </IconButton> */}
-                     <Box sx={{ marginLeft: 1 }} >
-                        <NavLink to="/" style={{ margin: "0 1rem" }}>Men</NavLink>
+                    <Box sx={{ marginLeft: 1 }} >
+                        <NavLink to="/men" style={{ margin: "0 1rem" }}>Men</NavLink>
                         <NavLink to="/women">Women</NavLink>
                     </Box>
                     <Box sx={{ flexGrow: 1 }} />
@@ -166,8 +208,8 @@ const theme = useTheme()
 
                     <Box sx={{ flexGrow: 1 }} />
 
- 
-                   
+
+
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                             <Badge badgeContent={0} color="error">
@@ -194,15 +236,15 @@ const theme = useTheme()
                         </div>
                     </div>
                 </Toolbar>
-                <Box sx={{backgroundColor: theme.palette.searchBackground.main}}>
-                <Search sx={{width: "100%"}}>
-                        <SearchIconWrapper color="black"  > 
+                <Box sx={{ backgroundColor: theme.palette.searchBackground.main }}>
+                    <Search sx={{ width: "100%" }}>
+                        <SearchIconWrapper color="black"  >
                             <SearchIcon color="primary" />
                         </SearchIconWrapper>
-                        <StyledInputBase fullWidth sx={{ backgroundColor: "transparent", color: "black", width: "100%"}}
+                        <StyledInputBase fullWidth sx={{ backgroundColor: "transparent", color: "black", width: "100%" }}
                             placeholder="Search…"
                             inputProps={{ 'aria-label': 'search' }}
-                            
+
                         />
                     </Search>
                 </Box>
