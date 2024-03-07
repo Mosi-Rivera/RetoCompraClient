@@ -145,13 +145,16 @@ const Header = (props) => {
                     >
                         <MenuIcon />
                     </IconButton> */}
-                    <Box sx={{ marginLeft: 1 }} >
+
+                     <Box sx={{ marginLeft: 1 }} >
+                        <NavLink to="/" style={{ margin: "0 1rem" }}>Men</NavLink>
                         <NavLink to="/men" style={{ margin: "0 1rem" }}>Men</NavLink>
                         <NavLink to="/women">Women</NavLink>
                     </Box>
                     <Box sx={{ flexGrow: 1 }} />
 
 
+                    <NavLink to="/">
                     <Typography
                         variant="h6"
                         noWrap
@@ -159,7 +162,10 @@ const Header = (props) => {
                         sx={{ display: { xs: 'none', sm: 'block' } }}
                     >
                         Graphic Groove
+
                     </Typography>
+                    </NavLink>
+
                     <Box sx={{ flexGrow: 1 }} />
 
 

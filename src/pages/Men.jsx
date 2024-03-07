@@ -10,6 +10,7 @@ export default function Men() {
 
 
     return (
+
         <Container maxWidth={false} sx={{ maxWidth: 1400, paddingTop: "95px" }}>
             <Header />
             <main>
@@ -52,3 +53,4 @@ export default function Men() {
         </Container >
     );
 }
+
