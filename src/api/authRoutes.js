@@ -16,7 +16,6 @@ export const signIn = async (userInfo) => {
 
 
 export const registerForm = async (userData) => {
-    console.log(userData)
     const response = await fetch( ORIGIN_URL + "/api/auth/register", {
         method: 'POST',
         credentials: 'include',
@@ -25,7 +24,6 @@ export const registerForm = async (userData) => {
         },
         body: JSON.stringify(userData)
     });
-    console.log(response)
 
     if (!response.ok)
         return Promise.reject(response);

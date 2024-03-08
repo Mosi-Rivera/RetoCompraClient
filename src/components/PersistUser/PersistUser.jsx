@@ -4,7 +4,6 @@ import userContext, { newDefaultUserContextState } from "../../contexts/userCont
 const PersistUser = ({children}) => {
     const {userInfo, setUserInfo} = useContext(userContext);
     const [isLoading, setIsLoading] = useState(false);
-    useEffect(() => console.log(userInfo), [userInfo]);
     useEffect(() => {
         const getUser = async () => {
             try {

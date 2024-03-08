@@ -14,11 +14,6 @@ import { ORIGIN_URL } from "../environment"
 export const getProducts = async (params) => {
     try {
         const queryStr = '?' + (new URLSearchParams(params)).toString();
-        console.log(params)
-        console.log(queryStr)
-        console.log(new URLSearchParams())
-        console.log(new URLSearchParams(params))
-        console.log(new URLSearchParams(params).toString())
         const response = await fetch(ORIGIN_URL + '/api/products' + queryStr);
         if (response.ok)
             return response.json();

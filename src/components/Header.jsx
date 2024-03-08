@@ -23,8 +23,8 @@ import { useTheme } from "@emotion/react";
 
 const AuthenticatedNav = ({ firstName, lastName, role, handleLogout }) => {
     const buttons = [
-        { content: <Typography>Account Details</Typography> },
-        { content: <Typography>Order History</Typography> },
+        // { content: <Typography>Account Details</Typography> },
+        // { content: <Typography>Order History</Typography> },
         { content: <Typography>Logout</Typography>, onClick: handleLogout },
     ];
     if (role === 'admin') {
@@ -77,7 +77,6 @@ const NotAuthenticatedNav = () => {
 const Header = (props) => {
     const theme = useTheme()
 
-    console.log(theme.palette.searchBackground)
 
     const navigate = useNavigate();
     const { userInfo, setUserInfo } = useContext(userContext);
@@ -92,19 +91,17 @@ const Header = (props) => {
 
     const handleSearchSubmit = (e) => {
         
-        console.log('im here!', e.target, e.code);
         const value = e.target.value;
         if (e.code != "Enter")
         {
-            console.log("Not submit key.");
             return;
         }
         if (!value || value.length <= 2)
         {
-            console.log('value is undefined or too short', value);
             return;
         }
-        return navigate(`/search/${value}`);
+        navigate(`/search/${value}`);
+        navigate(0);
     }
 
     const Search = styled('div')(({ theme }) => ({

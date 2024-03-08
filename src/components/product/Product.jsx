@@ -36,8 +36,8 @@ const Product = ({ product }) => {
   const thumbnail = assets?.thumbnail ? assets.thumbnail : '';
 
   return (<NavLink to={`/product/${_id}`}>
-        <ProductContainer data-testId='product-container'>
-            <ProductImage data-testId='product-image' thumbnail={thumbnail} />
+        <ProductContainer data-testid='product-container'>
+            <ProductImage data-testid='product-image' thumbnail={thumbnail} />
             <ProductContent>
                 <Typography variant="subtitle2" color="textSecondary">
                 {brand}
