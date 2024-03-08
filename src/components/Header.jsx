@@ -121,7 +121,46 @@ const Header = (props) => {
             marginLeft: theme.spacing(3),
             width: 'auto',
         },
+
     }));
+
+// const searchProduct = () => {
+//   const [searchQuery, setSearchQuery] = useState('');
+//   const [products, setProducts] = useState([]);
+
+//   const handleSearch = async () => {
+//     try {
+//       const response = await axios.get(`/api/products/search?q=${searchQuery}`);
+//       setProducts(response.data);
+//     } catch (error) {
+//       console.error('Error fetching products:', error);
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <input
+//         type="text"
+//         value={searchQuery}
+//         onChange={(e) => setSearchQuery(e.target.value)}
+//       />
+//       <button onClick={handleSearch}>Search</button>
+//       <ul>
+//         {products.map((product) => (
+//           <li key={product._id}>
+//             <h3>{product.name}</h3>
+//             <p>{product.description}</p>
+//             <p>Price: {product.price}</p>
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// };
+
+// export default Search;
+
+ 
 
     const SearchIconWrapper = styled('div')(({ theme }) => ({
         padding: theme.spacing(0, 2),
@@ -164,8 +203,8 @@ const Header = (props) => {
                         <MenuIcon />
                     </IconButton> */}
 
-                     <Box sx={{ marginLeft: 1 }} >
-                        <NavLink to="/" style={{ margin: "0 1rem" }}>Men</NavLink>
+                    <Box sx={{ marginLeft: 1 }} >
+
                         <NavLink to="/men" style={{ margin: "0 1rem" }}>Men</NavLink>
                         <NavLink to="/women">Women</NavLink>
                     </Box>
