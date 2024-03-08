@@ -5,7 +5,7 @@ import { ORIGIN_URL } from "../environment"
 @param {String=} params.sort - "new" | "popular" | "high" | "low"
 @param {String=} params.color - Product color.
 @param {String=} params.brand - Product brand.
-@param {string=} params.section - "MEN" | "WOMEN"
+@param {string=} params.section - "men" | "women"
 @param {Number=} params.page - pagination page number.
 @param {Number=} params.limit - Product x page limit.
 @param {Number=} params.minPrice - Minimum price of products to return
@@ -14,11 +14,6 @@ import { ORIGIN_URL } from "../environment"
 export const getProducts = async (params) => {
     try {
         const queryStr = '?' + (new URLSearchParams(params)).toString();
-        console.log(params)
-        console.log(queryStr)
-        console.log(new URLSearchParams())
-        console.log(new URLSearchParams(params))
-        console.log(new URLSearchParams(params).toString())
         const response = await fetch(ORIGIN_URL + '/api/products' + queryStr);
         if (response.ok)
             return response.json();
@@ -29,7 +24,6 @@ export const getProducts = async (params) => {
         console.log(err);
     }
 }
-
 
 export const getSearchedProduct = async (params, searchText) => {
     const queryStr = '?' + (new URLSearchParams(params)).toString();

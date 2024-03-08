@@ -12,7 +12,6 @@ const ModalComponent = ({
     buttonSx = {},
     titleSx = {}
 }) => {
-    console.log(open);
     return <>
         <Button
         sx={buttonSx}

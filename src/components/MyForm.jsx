@@ -20,7 +20,6 @@ passwordSchema
 
 const defaultErrorState = { server: "", email: "", password: "", firstName: "", lastName: "", confirmPassword: "" }
 
-console.log(import.meta.env.VITE_KEY)
 
 const MyForm = () => {
   const { setUserInfo } = useContext(userContext);
@@ -65,7 +64,6 @@ const MyForm = () => {
 
     if (password !== confirmPassword) {
       setErrorMessage({ ...defaultErrorState, confirmPassword: "Confirm password does not match" });
-      console.log(password, confirmPassword)
       return;
     }
     const encryptedPassword = CryptoJS.AES.encrypt(formData.password, import.meta.env.VITE_KEY)
@@ -75,7 +73,6 @@ const MyForm = () => {
       const { user } = await registerForm({
         ...newFormData, password: encryptedPassword.toString()
       });
-      console.log(user)
 
 
       setUserInfo({ isAuthenticated: true, user });
@@ -84,16 +81,13 @@ const MyForm = () => {
       if (error.status === 400) {
         const { field, errorMessage } = await error.json()
 
-        console.log(field, errorMessage)
         return setErrorMessage({ ...defaultErrorState, [field]: errorMessage })
       }
       setErrorMessage(defaultErrorState)
-      console.log(error.status)
     }
 
 
     // Add logic to handle form submission
-    console.log('Form submitted:', formData);
   };
 
   return (

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -23,8 +23,8 @@ import { useTheme } from "@emotion/react";
 
 const AuthenticatedNav = ({ firstName, lastName, role, handleLogout }) => {
     const buttons = [
-        { content: <Typography>Account Details</Typography> },
-        { content: <Typography>Order History</Typography> },
+        // { content: <Typography>Account Details</Typography> },
+        // { content: <Typography>Order History</Typography> },
         { content: <Typography>Logout</Typography>, onClick: handleLogout },
     ];
     if (role === 'admin') {
@@ -77,8 +77,8 @@ const NotAuthenticatedNav = () => {
 const Header = (props) => {
     const theme = useTheme()
 
-    console.log(theme.palette.searchBackground)
 
+    const navigate = useNavigate();
     const { userInfo, setUserInfo } = useContext(userContext);
     const handleLogout = async () => {
         try {
@@ -87,6 +87,21 @@ const Header = (props) => {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    const handleSearchSubmit = (e) => {
+        
+        const value = e.target.value;
+        if (e.code != "Enter")
+        {
+            return;
+        }
+        if (!value || value.length <= 2)
+        {
+            return;
+        }
+        navigate(`/search/${value}`);
+        navigate(0);
     }
 
     const Search = styled('div')(({ theme }) => ({
@@ -235,15 +250,14 @@ const Header = (props) => {
                         </div>
                     </div>
                 </Toolbar>
-                <Box sx={{ backgroundColor: theme.palette.searchBackground.main }}>
-                    <Search sx={{ width: "100%" }}>
-                        <SearchIconWrapper color="black"  >
+                <Box sx={{backgroundColor: theme.palette.searchBackground.main}}>
+                    <Search sx={{width: "100%"}}>
+                        <SearchIconWrapper color="black"  > 
                             <SearchIcon color="primary" />
                         </SearchIconWrapper>
-                        <StyledInputBase fullWidth sx={{ backgroundColor: "transparent", color: "black", width: "100%" }}
+                        <StyledInputBase onKeyDown={handleSearchSubmit} fullWidth sx={{ backgroundColor: "transparent", color: "black", width: "100%"}}
                             placeholder="Search…"
                             inputProps={{ 'aria-label': 'search' }}
-
                         />
                     </Search>
                 </Box>

@@ -22,7 +22,6 @@ const DisplayProducts = ({ fetchMethod, filter = false, pagination = false, defa
             options.page = page;
             if (!options.sort)
                 options.sort = defaultSort;
-            console.log(options)
             const { products: newProducts, pages } = await fetchMethod(options);
             setProducts(newProducts);
             setMaxPages(pages);
@@ -60,7 +59,7 @@ const DisplayProducts = ({ fetchMethod, filter = false, pagination = false, defa
         [searchParams]
     );
     return (
-        <div data-testId='display-products'>
+        <div data-testid='display-products'>
             {filter && <ProductFilters defaultSort={defaultSort} />}
             {
                 loadingBackdrop && <Backdrop
@@ -74,7 +73,7 @@ const DisplayProducts = ({ fetchMethod, filter = false, pagination = false, defa
             <ProductsList products={products} />
             {
                 pagination && <Pagination
-                    data-testId='pagination'
+                    data-testid='pagination'
                     count={maxPages}
                     page={page}
                     onChange={(_, value) => setPage(value)}
