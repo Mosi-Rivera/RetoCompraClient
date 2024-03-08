@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -79,6 +79,7 @@ const theme = useTheme()
     
     console.log(theme.palette.searchBackground)
 
+    const navigate = useNavigate();
     const { userInfo, setUserInfo } = useContext(userContext);
     const handleLogout = async () => {
         try {
@@ -87,6 +88,23 @@ const theme = useTheme()
         } catch (error) {
             console.log(error);
         }
+    }
+
+    const handleSearchSubmit = (e) => {
+        
+        console.log('im here!', e.target, e.code);
+        const value = e.target.value;
+        if (e.code != "Enter")
+        {
+            console.log("Not submit key.");
+            return;
+        }
+        if (!value || value.length <= 2)
+        {
+            console.log('value is undefined or too short', value);
+            return;
+        }
+        return navigate(`/search/${value}`);
     }
 
     const Search = styled('div')(({ theme }) => ({
@@ -191,14 +209,13 @@ const theme = useTheme()
                     </div>
                 </Toolbar>
                 <Box sx={{backgroundColor: theme.palette.searchBackground.main}}>
-                <Search sx={{width: "100%"}}>
+                    <Search sx={{width: "100%"}}>
                         <SearchIconWrapper color="black"  > 
                             <SearchIcon color="primary" />
                         </SearchIconWrapper>
-                        <StyledInputBase fullWidth sx={{ backgroundColor: "transparent", color: "black", width: "100%"}}
+                        <StyledInputBase onKeyDown={handleSearchSubmit} fullWidth sx={{ backgroundColor: "transparent", color: "black", width: "100%"}}
                             placeholder="Search…"
                             inputProps={{ 'aria-label': 'search' }}
-                            
                         />
                     </Search>
                 </Box>
