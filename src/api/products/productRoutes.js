@@ -33,3 +33,13 @@ export const getSearchedProduct = async (params, searchText) => {
     else
         return Promise.reject(response);
 }
+
+
+
+export const getProductInfo = async (productInfo) => { 
+    const response = await fetch(ORIGIN_URL + '/api/products/productInfo/' + productInfo);
+    if (response.ok)
+        return response.json();
+    else
+        return Promise.reject(response);
+}

@@ -10,12 +10,11 @@ export default function searchProduct() {
 
     const {searchText} = useParams();
 
-
     return (
         <Container maxWidth={false} sx={{ maxWidth: 1400, paddingTop: "95px", textAlign: 'left'  }}>
             <Header />
             <main>
-                {/* <section>
+                                {/* <section>
                     <div className="full" style={{
                         width: '100%',
                     }}>
