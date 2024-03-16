@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Outlet, NavLink, useNavigate } from "react-router-dom";
+import { Outlet, NavLink, useNavigate, Link } from "react-router-dom";
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -18,7 +18,6 @@ import MyForm from "./MyForm";
 import SignIn from "./SignIn";
 import DropdownMenuButton from "./DropdownMenuButton";
 import { logout } from "../api/authRoutes";
-import { grey } from "@mui/material/colors"
 import { useTheme } from "@emotion/react";
 
 const AuthenticatedNav = ({ firstName, lastName, role, handleLogout }) => {
@@ -34,8 +33,15 @@ const AuthenticatedNav = ({ firstName, lastName, role, handleLogout }) => {
     }
     return (
         <nav style={{ display: "flex" }}>
+            <Link to='/cart'>
+            <IconButton size="large" color="inherit">
+                <Badge badgeContent={0} color="error">
+                    <ShoppingCartIcon />
+                </Badge>
+            </IconButton>
+            </Link>
             <DropdownMenuButton
-                sx={{ color: "white", maxWidth: '150px' }}
+                sx={{ color: "white", maxWidth: '150px', height: '100%' }}
                 buttons={buttons}
                 buttonContent={
                     <><AccountCircle /> <Typography textOverflow={"ellipsis"} overflow={"clip"} style={{ marginLeft: ".25rem", fontSize: "1rem" }}>{firstName}</Typography></>
@@ -121,44 +127,6 @@ const Header = (props) => {
 
     }));
 
-// const searchProduct = () => {
-//   const [searchQuery, setSearchQuery] = useState('');
-//   const [products, setProducts] = useState([]);
-
-//   const handleSearch = async () => {
-//     try {
-//       const response = await axios.get(`/api/products/search?q=${searchQuery}`);
-//       setProducts(response.data);
-//     } catch (error) {
-//       console.error('Error fetching products:', error);
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <input
-//         type="text"
-//         value={searchQuery}
-//         onChange={(e) => setSearchQuery(e.target.value)}
-//       />
-//       <button onClick={handleSearch}>Search</button>
-//       <ul>
-//         {products.map((product) => (
-//           <li key={product._id}>
-//             <h3>{product.name}</h3>
-//             <p>{product.description}</p>
-//             <p>Price: {product.price}</p>
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default Search;
-
- 
-
     const SearchIconWrapper = styled('div')(({ theme }) => ({
         padding: theme.spacing(0, 2),
         height: '100%',
@@ -190,16 +158,6 @@ const Header = (props) => {
             <Box sx={{ flexGrow: 1 }} />
             <AppBar elevation={0} >
                 <Toolbar>
-                    {/* <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        sx={{ mr: 2 }}
-                    >
-                        <MenuIcon />
-                    </IconButton> */}
-
                     <Box sx={{ marginLeft: 1 }} >
 
                         <NavLink to="/men" style={{ margin: "0 1rem" }}>Men</NavLink>
@@ -222,32 +180,11 @@ const Header = (props) => {
 
                     <Box sx={{ flexGrow: 1 }} />
 
-
-
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={0} color="error">
-                                <ShoppingCartIcon />
-                            </Badge>
-                        </IconButton>
-                        {/* <IconButton
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
-                        >
-                            <Badge badgeContent={0} color="error">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton> */}
-                    </Box>
                     <div>
                         {userInfo.isAuthenticated ?
                             <AuthenticatedNav handleLogout={handleLogout} role={userInfo.user.role} firstName={userInfo.user.firstName} lastName={userInfo.user.lastName} /> :
                             <NotAuthenticatedNav />
                         }
-                        <div>
-                            <Outlet />
-                        </div>
                     </div>
                 </Toolbar>
                 <Box sx={{backgroundColor: theme.palette.searchBackground.main}}>
