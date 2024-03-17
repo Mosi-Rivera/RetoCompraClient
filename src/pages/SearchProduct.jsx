@@ -46,7 +46,7 @@ export default function searchProduct() {
                     </Grid>
                 </section> */}
                 <section>
-                    <h2 style={{ textAlign: 'left' }}>Search Product</h2>
+                    <h2 style={{ textAlign: 'left' }}>Search "{searchText}"</h2>
                     <DisplayProducts fetchMethod={(options) => getSearchedProduct(options,searchText)} defaultLimit={24} pagination={true} filter={true} />
                 </section>
             </main>
