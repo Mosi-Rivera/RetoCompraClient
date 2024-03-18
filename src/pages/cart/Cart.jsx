@@ -23,7 +23,6 @@ const CartPage = () => {
     try {
       await setItemQuantity(sku, size, quantity);
       setCart({
-        ...cart,
         items: cart.items.map(item => {
           if (item.variant._id === sku)
           {
@@ -41,6 +40,7 @@ const CartPage = () => {
   const handleRemoveItem = async (sku, size) => {
     try {
       await removeItem(sku, size);
+      setCart({items: cart.items.filter(item => !(item.variant._id === sku && item.size === size))});
     } catch (error) {
       console.log(error);
     }
@@ -49,7 +49,6 @@ const CartPage = () => {
     (async () => {
       try {
         const newCart = await getCart();
-        console.log(newCart)
         setCart(newCart);
       } catch (error) {
         console.log(error);
