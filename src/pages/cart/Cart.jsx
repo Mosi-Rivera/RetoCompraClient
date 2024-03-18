@@ -19,6 +19,12 @@ const CartPage = () => {
     (acc, item) => acc + item.quantity * item.variant.price.value, 0
   ).toFixed(2) || 0, [cart?.items]);
 
+  useEffect(() => {
+    const newUserInfo = userInfo;
+    newUserInfo.user.cartCount = itemsCount;
+    setUserInfo({...newUserInfo});
+  }, [itemsCount]);
+
   const handleUpdateQuantity = async (sku, size, quantity) => {
     try {
       await setItemQuantity(sku, size, quantity);

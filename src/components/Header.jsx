@@ -20,7 +20,7 @@ import DropdownMenuButton from "./DropdownMenuButton";
 import { logout } from "../api/authRoutes";
 import { useTheme } from "@emotion/react";
 
-const AuthenticatedNav = ({ firstName, lastName, role, handleLogout }) => {
+const AuthenticatedNav = ({ firstName, role, handleLogout, cartItemCount}) => {
     const buttons = [
         // { content: <Typography>Account Details</Typography> },
         // { content: <Typography>Order History</Typography> },
@@ -35,7 +35,7 @@ const AuthenticatedNav = ({ firstName, lastName, role, handleLogout }) => {
         <nav style={{ display: "flex" }}>
             <Link to='/cart'>
             <IconButton size="large" color="inherit">
-                <Badge badgeContent={0} color="error">
+                <Badge badgeContent={cartItemCount} color="error">
                     <ShoppingCartIcon />
                 </Badge>
             </IconButton>
@@ -183,7 +183,7 @@ const Header = (props) => {
 
                     <div>
                         {userInfo.isAuthenticated ?
-                            <AuthenticatedNav handleLogout={handleLogout} role={userInfo.user.role} firstName={userInfo.user.firstName} lastName={userInfo.user.lastName} /> :
+                            <AuthenticatedNav cartItemCount={userInfo.user.cartCount || 0} handleLogout={handleLogout} role={userInfo.user.role} firstName={userInfo.user.firstName} lastName={userInfo.user.lastName} /> :
                             <NotAuthenticatedNav />
                         }
                     </div>
