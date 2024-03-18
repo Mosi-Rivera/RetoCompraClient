@@ -91,7 +91,7 @@ const Header = (props) => {
 
     const handleSearchSubmit = (e) => {
         
-        const value = e.target.value;
+        const value = e.target.value.replace(/[\/\\?=]/g, '');
         if (e.code != "Enter")
         {
             return;
@@ -100,6 +100,7 @@ const Header = (props) => {
         {
             return;
         }
+
         navigate(`/search/${value}`);
         navigate(0);
     }
