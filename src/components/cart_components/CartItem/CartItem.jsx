@@ -1,4 +1,5 @@
-import { Box, FormControl, MenuItem, Select, Typography } from "@mui/material";
+import { DeleteForever } from "@mui/icons-material";
+import { Box, FormControl, IconButton, MenuItem, Select, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const CartItem = ({item, handleSetQuantity, handleRemove}) => {
@@ -6,7 +7,7 @@ const CartItem = ({item, handleSetQuantity, handleRemove}) => {
     const price = item.variant.price.value;
     const totalPrice = (item.variant.price.value * item.quantity).toFixed(2);
     return (
-        <Box display="flex" paddingY={3} sx={{borderBottom: "1px solid grey"}}>
+        <Box display="flex" marginBottom={4}>
             <Box marginRight={2}>
                 <Link to={'/productInfo/' + item._id}>
                     <img src={item.variant.assets.thumbnail} aria-description="Product image." style={{width: '100px'}}/>
@@ -14,14 +15,20 @@ const CartItem = ({item, handleSetQuantity, handleRemove}) => {
             </Box>
             <Box flex={1}>
                 <Box>
-                    <Typography variant="body1" fontWeight='bold'>{item.variant.product.name}</Typography>
-                    <Typography variant="body2">Color: {item.variant.color}</Typography>
-                    <Typography variant="body2">Size: {item.size}</Typography>
+                    <Box display='flex' justifyContent='space-between' alignItems='center'>
+                        <Typography variant="body1" fontWeight='bold'>{item.variant.product.name}</Typography>
+                        <IconButton onClick={() => handleRemove(item.variant._id, item.size)}>
+                            <DeleteForever/>
+                        </IconButton>
+                    </Box>
+                    <Box>
+                        <Typography variant="body2">Size: {item.size}</Typography>
+                    </Box>
                 </Box>
                 <Box>
-                    <Box display="flex" justifyContent="space-between" alignItems="flex-end">
+                    <Box display="flex" flexDirection='column' justifyContent="space-between">
                         <Typography variant="body1">Quantity:</Typography>
-                        <FormControl size="small">
+                        <FormControl size="small" sx={{maxWidth: '70px'}}>
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
@@ -36,19 +43,9 @@ const CartItem = ({item, handleSetQuantity, handleRemove}) => {
                             </Select>
                         </FormControl>
                     </Box>
-                    <Box display="flex" justifyContent="space-between" alignItems="center" marginTop={2}>
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
                         <Typography variant="body1">Price:</Typography>
-                        <Typography variant="body1">${price}</Typography>
-                    </Box >
-                    <Box display="flex" justifyContent="space-between" alignItems="center" marginTop={2}>
-                        <Typography variant="body1">Total Price:</Typography>
                         <Typography variant="body1">${totalPrice}</Typography>
-                    </Box>
-                    <Box>
-                        <span 
-                            style={{textDecoration: 'underline', cursor: 'pointer', padding: '1rem 0px', display: 'inline-block'}}
-                            onClick={() => handleRemove(item.variant._id, item.size)}
-                        >Remove</span>
                     </Box>
                 </Box>
             </Box>

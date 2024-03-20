@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Outlet, NavLink, useNavigate, Link } from "react-router-dom";
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -19,9 +19,14 @@ import SignIn from "./SignIn";
 import DropdownMenuButton from "./DropdownMenuButton";
 import { logout } from "../api/authRoutes";
 import { useTheme } from "@emotion/react";
+import CartPage from "../pages/cart/Cart";
+import { Drawer } from "@mui/material";
 
-const AuthenticatedNav = ({ firstName, role, handleLogout, cartItemCount}) => {
+const AuthenticatedNav = ({ firstName, role, handleLogout, cart}) => {
     const navigate = useNavigate();
+    const cartCount = useMemo(() => cart?.reduce((acc, {quantity}) => acc + quantity, 0 ) || 0, [cart]);
+    const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
+    const toggleCartDrawer = (b) => setCartDrawerOpen(b === undefined ? !cartDrawerOpen : b);
     const buttons = [
         // { content: <Typography>Account Details</Typography> },
         // { content: <Typography>Order History</Typography> },
@@ -34,19 +39,20 @@ const AuthenticatedNav = ({ firstName, role, handleLogout, cartItemCount}) => {
     }
     return (
         <nav style={{ display: "flex" }}>
-            <Link to='/cart'>
-            <IconButton size="large" color="inherit">
-                <Badge badgeContent={cartItemCount} color="error">
+            <IconButton onClick={() => toggleCartDrawer(true)} size="large" color="inherit">
+                <Badge badgeContent={cartCount} color="error">
                     <ShoppingCartIcon />
                 </Badge>
             </IconButton>
-            </Link>
             <DropdownMenuButton
                 sx={{ color: "white", maxWidth: '150px', height: '100%' }}
                 buttons={buttons}
                 buttonContent={
                     <><AccountCircle /> <Typography textOverflow={"ellipsis"} overflow={"clip"} style={{ marginLeft: ".25rem", fontSize: "1rem" }}>{firstName}</Typography></>
-                } />
+               } />
+            <Drawer anchor="right" open={cartDrawerOpen} onClose={() => toggleCartDrawer(false)}>
+                <CartPage closeDrawer={() => toggleCartDrawer(false)}/>
+            </Drawer>
         </nav>
     );
 }
@@ -87,6 +93,7 @@ const Header = (props) => {
 
     const navigate = useNavigate();
     const { userInfo, setUserInfo } = useContext(userContext);
+
     const handleLogout = async () => {
         try {
             await logout();
@@ -184,7 +191,7 @@ const Header = (props) => {
 
                     <div>
                         {userInfo.isAuthenticated ?
-                            <AuthenticatedNav cartItemCount={userInfo.user.cartCount || 0} handleLogout={handleLogout} role={userInfo.user.role} firstName={userInfo.user.firstName} lastName={userInfo.user.lastName} /> :
+                            <AuthenticatedNav cart={userInfo.user.cart} handleLogout={handleLogout} role={userInfo.user.role} firstName={userInfo.user.firstName} lastName={userInfo.user.lastName} /> :
                             <NotAuthenticatedNav />
                         }
                     </div>
@@ -201,6 +208,7 @@ const Header = (props) => {
                     </Search>
                 </Box>
             </AppBar>
+
         </header >
     )
 }
