@@ -54,12 +54,12 @@ const FilterSidebar = ({defaultSort = 'new'}) => {
   );
 
   return (
-      <div data-testId='product-filters'>
+      <div data-testid='product-filters'>
         <div style={{display: 'flex', marginBottom: '10px', maxWidth: '500px'}}>
             <FormControl style={{ flex: '1', marginRight: '10px' }}>
               <InputLabel htmlFor="size">Size</InputLabel>
               <Select
-                data-testId='size-select'
+                data-testid='size-select'
                 id="size"
                 value={searchParams.get('size') || ''}
                 onChange={(e) => handleInputChange('size', e.target.value)}
@@ -80,7 +80,7 @@ const FilterSidebar = ({defaultSort = 'new'}) => {
             <FormControl style={{ flex: '1', marginRight: '10px' }}>
               <InputLabel htmlFor="color">Color</InputLabel>
               <Select
-                data-testId='color-select'
+                data-testid='color-select'
                 id="color"
                 value={searchParams.get('color') || ''}
                 onChange={(e) => handleInputChange('color', e.target.value)}
@@ -105,7 +105,7 @@ const FilterSidebar = ({defaultSort = 'new'}) => {
             <FormControl style={{ flex: '1', marginRight: '10px' }}>
               <InputLabel htmlFor="sort">Sort</InputLabel>
               <Select
-                data-testId='sort-select'
+                data-testid='sort-select'
                 id="sort"
                 value={searchParams.get('sort') || defaultSort}
                 onChange={(e) => handleInputChange('sort', e.target.value)}

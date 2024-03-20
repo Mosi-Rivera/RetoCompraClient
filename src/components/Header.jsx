@@ -21,10 +21,11 @@ import { logout } from "../api/authRoutes";
 import { useTheme } from "@emotion/react";
 
 const AuthenticatedNav = ({ firstName, role, handleLogout, cartItemCount}) => {
+    const navigate = useNavigate();
     const buttons = [
         // { content: <Typography>Account Details</Typography> },
         // { content: <Typography>Order History</Typography> },
-        { content: <Typography>Logout</Typography>, onClick: handleLogout },
+        { content: <Typography>Logout</Typography>, onClick: () => handleLogout().then(() => navigate(0)) },
     ];
     if (role === 'admin') {
         buttons.unshift({
@@ -102,7 +103,7 @@ const Header = (props) => {
         {
             return;
         }
-        if (!value || value.length <= 2)
+        if (!value || value.trim().length <= 2)
         {
             return;
         }

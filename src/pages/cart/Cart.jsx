@@ -1,5 +1,4 @@
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
-import Header from "../../components/Header";
 import { getCart, setItemQuantity, removeItem } from "../../api/cart/cart_routes";
 import { useContext, useEffect, useMemo, useState } from "react";
 import CartItem from "../../components/cart_components/CartItem/CartItem";
@@ -63,10 +62,8 @@ const CartPage = () => {
   }, []);
 
   if (!cart)
-  return (<h1>No Cart Found</h1>);
+  return (<></>);
   return (
-    <Container sx={{marginTop: '2rem'}}>
-      <Header/>
       <section>
         {
           cart.items?.length == 0 ? 
@@ -108,7 +105,6 @@ const CartPage = () => {
             </>
         }
       </section>
-    </Container>
   );
 }
 
