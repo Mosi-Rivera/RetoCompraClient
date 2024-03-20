@@ -1,11 +1,19 @@
 import { DeleteForever } from "@mui/icons-material";
 import { Box, FormControl, IconButton, MenuItem, Select, Typography } from "@mui/material";
+import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 const CartItem = ({item, handleSetQuantity, handleRemove}) => {
     const quantity = item.quantity;
-    const price = item.variant.price.value;
     const totalPrice = (item.variant.price.value * item.quantity).toFixed(2);
+    const stock = item?.variant?.stock?.[item.size]?.stock;
+    const quantityMenuItems = useMemo(() => (
+        Array.from({length: Math.min(5, item?.variant?.stock?.[item.size]?.stock || 0)}, (_, index) => <MenuItem key={item.variant + item.size + index} value={index + 1}>{index + 1}</MenuItem>)
+    ), [stock]);
+    useEffect(() => {
+        if (item.quantity > stock)
+            handleSetQuantity(item.variant._id, item.size, stock);
+    }, [item]);
     return (
         <Box display="flex" marginBottom={4}>
             <Box marginRight={2}>
@@ -35,11 +43,7 @@ const CartItem = ({item, handleSetQuantity, handleRemove}) => {
                                 value={quantity}
                                 onChange={e => handleSetQuantity(item.variant._id, item.size, e.target.value)}
                             >
-                                <MenuItem value={1}>1</MenuItem>
-                                <MenuItem value={2}>2</MenuItem>
-                                <MenuItem value={3}>3</MenuItem>
-                                <MenuItem value={4}>4</MenuItem>
-                                <MenuItem value={5}>5</MenuItem>
+                                {quantityMenuItems}
                             </Select>
                         </FormControl>
                     </Box>
