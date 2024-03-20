@@ -7,9 +7,8 @@ import Home from './pages/Home';
 import Men from './pages/Men';
 import Women from './pages/Women';
 import SearchProduct from './pages/SearchProduct'
-import CartPage from './pages/cart/Cart';
 import Layout from './components/Layout';
-import LoggedInGuard from '../route_guards/LoggedInGuard';
+import PageNotFound from './pages/PageNotFound';
 
 
 function App() {
@@ -24,10 +23,8 @@ function App() {
               <Route path='/men' element={<Men />} />
               <Route path='/women' element={<Women />} />
               <Route path='/search/:searchText' element={<SearchProduct />} />
-              <Route path='/' element={<LoggedInGuard/>}>
-                <Route path='/cart' element={<CartPage/>}/>
-              </Route>
             </Route>
+            <Route path='*' element={<PageNotFound/>}/>
           </Routes>
         </PersistUser>
       </UserProvider>

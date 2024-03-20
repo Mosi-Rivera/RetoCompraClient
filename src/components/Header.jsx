@@ -19,7 +19,7 @@ import SignIn from "./SignIn";
 import DropdownMenuButton from "./DropdownMenuButton";
 import { logout } from "../api/authRoutes";
 import { useTheme } from "@emotion/react";
-import CartPage from "../pages/cart/Cart";
+import Cart from "./cart/Cart";
 import { Drawer } from "@mui/material";
 
 const AuthenticatedNav = ({ firstName, role, handleLogout, cart}) => {
@@ -51,7 +51,7 @@ const AuthenticatedNav = ({ firstName, role, handleLogout, cart}) => {
                     <><AccountCircle /> <Typography textOverflow={"ellipsis"} overflow={"clip"} style={{ marginLeft: ".25rem", fontSize: "1rem" }}>{firstName}</Typography></>
                } />
             <Drawer anchor="right" open={cartDrawerOpen} onClose={() => toggleCartDrawer(false)}>
-                <CartPage closeDrawer={() => toggleCartDrawer(false)}/>
+                <Cart closeDrawer={() => toggleCartDrawer(false)}/>
             </Drawer>
         </nav>
     );

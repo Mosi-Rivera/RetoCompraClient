@@ -9,7 +9,7 @@ const CartItem = ({item, handleSetQuantity, handleRemove}) => {
     return (
         <Box display="flex" marginBottom={4}>
             <Box marginRight={2}>
-                <Link to={'/productInfo/' + item._id}>
+                <Link to={'/productInfo/' + item.variant._id}>
                     <img src={item.variant.assets.thumbnail} aria-description="Product image." style={{width: '100px'}}/>
                 </Link>
             </Box>
