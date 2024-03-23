@@ -11,6 +11,9 @@ const theme = createTheme({
     },
     searchBackground: {
       main: '#DDE6ED'      
+    },
+    border: {
+      main: '#e0e0e0'
     }
 
 
