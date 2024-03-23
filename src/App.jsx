@@ -9,6 +9,7 @@ import Women from './pages/Women';
 import SearchProduct from './pages/SearchProduct'
 
 import { CrudProducts } from './components/CrudProducts';
+import CheckoutForm from './pages/CheckoutForm';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route path='/men' element={<Men />} />
             <Route path='/women' element={<Women />} />
             <Route path='/search/:searchText' element={<SearchProduct />} />
+            <Route path='/checkout' element={<CheckoutForm />} />
             {/* <Route path= "/Crud" element={<CrudProducts/>} /> */}
           </Routes>
         </PersistUser>
