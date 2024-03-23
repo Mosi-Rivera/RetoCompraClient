@@ -7,8 +7,8 @@ import Home from './pages/Home';
 import Men from './pages/Men';
 import Women from './pages/Women';
 import SearchProduct from './pages/SearchProduct'
-
-import { CrudProducts } from './components/CrudProducts';
+import Layout from './components/Layout';
+import PageNotFound from './pages/PageNotFound';
 
 
 function App() {
@@ -18,11 +18,13 @@ function App() {
       <UserProvider>
         <PersistUser>
           <Routes>
-            <Route path='*' element={<Home />} />
-            <Route path='/men' element={<Men />} />
-            <Route path='/women' element={<Women />} />
-            <Route path='/search/:searchText' element={<SearchProduct />} />
-            {/* <Route path= "/Crud" element={<CrudProducts/>} /> */}
+            <Route path='/' element={<Layout/>}>
+              <Route path='/' element={<Home />} />
+              <Route path='/men' element={<Men />} />
+              <Route path='/women' element={<Women />} />
+              <Route path='/search/:searchText' element={<SearchProduct />} />
+            </Route>
+            <Route path='*' element={<PageNotFound/>}/>
           </Routes>
         </PersistUser>
       </UserProvider>
