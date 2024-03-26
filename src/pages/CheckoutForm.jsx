@@ -6,41 +6,33 @@ import { Grid, MenuItem, Select } from "@mui/material";
 import Header from "../components/Header";
 import Countries from "../components/Countries";
 import { checkout } from "../api/checkoutRoutes";
-import ModalComponent from "../components/Modal/Modal";
+import { CheckoutModal } from "../components/Modal/Modal";
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 
-const defaultErrorState = { server: "", streetAddress: "", state: "", city: "", zipCode: "" };
 
+const defaultErrorState = { server: "", streetAddress: "", state: "", city: "", zipCode: "" };
+const defaultDeliveryInfo = { streetAddress: "", optionalAddress: "", state: "", city: "", zipCode: "" }
 
 
 export default function CheckoutForm() {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [modalOpen, setModalOpen] = useState(false)
+  const handleOpen = () => setModalOpen(true)
+  const handleClose = () => setModalOpen(false)
+
+  const [userDeliveryInfo, setDeliveryInfo] = useState(defaultDeliveryInfo)
 
   const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    minWidth: 200,
-    maxWidth: 700,
+    width: "29rem",
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
   };
-
-
-  const [userDeliveryInfo, setDeliveryInfo] = useState({
-    streetAddress: "",
-    optionalAddress: "",
-    state: "",
-    city: "",
-    zipCode: ""
-  })
-
 
   const [errorMessage, setErrorMessage] = useState(defaultErrorState)
 
@@ -49,9 +41,7 @@ export default function CheckoutForm() {
     setDeliveryInfo(prevValue => {
       return { ...prevValue, [name]: value }
     })
-
   }
-
 
   function countryValue(event) {
     setDeliveryInfo(prevValue => {
@@ -59,7 +49,7 @@ export default function CheckoutForm() {
     })
   }
 
-  const handleSubmit = async (event) => {
+  const handleClick = async (event) => {
     event.preventDefault()
 
     if (!userDeliveryInfo.streetAddress || !userDeliveryInfo.state || !userDeliveryInfo.city || !userDeliveryInfo.zipCode)
@@ -69,49 +59,30 @@ export default function CheckoutForm() {
         city: userDeliveryInfo.city === "" ? "This field is required" : "",
         zipCode: userDeliveryInfo.zipCode === "" ? "This field is required" : "",
       })
+    handleOpen()
+  }
 
-
-
+  const handleSubmit = async (event) => {
+    event.preventDefault()
     try {
-
       const deliveryInfo = await checkout(userDeliveryInfo)
       console.log(deliveryInfo)
-
+      handleClose()
     } catch (error) {
       console.log(error)
-
       //  ***revisit to see if this is the best way to handle the error message from the server***
       //    if (error.status === 400) {
       //   const { field, errorMessage } = await error.json()
       //   return setErrorMessage({ ...defaultErrorState, [field]: errorMessage })
       // }
     }
+    setDeliveryInfo(defaultDeliveryInfo)
     setErrorMessage(defaultErrorState)
   }
-  // const Confirmation = () => {
-  //   const [showRegister, setShowRegister] = useState(false);
-  //   return (
-  //     <nav>
-  //       <Modal
-  //         open={showRegister}
-  //         handleOpen={() => setShowRegister(true)}
-  //         handleClose={() => setShowRegister(false)}
-  //         buttonText="Register"
-  //         title="Register"
-  //         buttonSx={{ color: "white" }}
-  //       >
-  //         <h1>Are you Sure?</h1>
-  //       </Modal>
-  //     </nav >
-  //   );
-
-  // }
-
 
   return (
     <>
-      <Header></Header>
-      <Box component="form" onSubmit={handleSubmit} sx={{ maxWidth: 400, marginTop: 15, marginLeft: 2 }}>
+      <Box component="form" sx={{ maxWidth: 400 }}>
         <h3>Shipping Address</h3>
         <Box sx={{ display: "flex", flexFlow: "column nowrap" }}>
           <TextField
@@ -172,52 +143,22 @@ export default function CheckoutForm() {
               helperText={errorMessage.zipCode}
             ></TextField>
           </Grid>
-
         </Grid>
 
+        <Button onClick={handleClick} variant="contained">Submit</Button>
 
-        <Button type="submit" variant="contained">Submit</Button>
-
-        <Button onClick={handleOpen}>Open modal</Button>
-        <Modal
-          open={open}
+        {modalOpen && (<CheckoutModal
+          onSubmit={handleSubmit}
+          onCancel={handleClose}
           onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              <p style={{ fontWeight: 500 }}>Do you want to continue with this address?</p>
-              <span>{userDeliveryInfo.streetAddress}</span>
-              <br></br>
-              {userDeliveryInfo.optionalAddress && <span>{`${userDeliveryInfo.optionalAddress}`}</span>}
-              <br></br>
-              <span>{`${userDeliveryInfo.city} `}</span>
-              <span>{`${userDeliveryInfo.state}`}</span>
-              <span>{` ${userDeliveryInfo.zipCode}`}</span>
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              <Button variant="contained" size="large">Yes</Button> <Button variant="contained" size="large">No</Button>
-            </Typography>
-
-          </Box>
-        </Modal>
-
+          deliveryInfo={userDeliveryInfo}
+          style={style}>
+        </CheckoutModal>)}
 
       </Box >
     </>
   )
 }
 
-{/* <Box sx={{ display: "flex", flexFlow: "column nowrap" }}>
-          <label>Full Name (First and Last name)</label>
-          <TextField
-            name=""
-            value={userDeliveryInfo.fullName}
-            // label="Full Name"
-            // InputLabelProps={{ shrink: true, size: "big" }}
-            fullWidth
-          >
-          </TextField>
-        </Box> */}
+
 
