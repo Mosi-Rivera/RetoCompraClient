@@ -71,7 +71,7 @@ export default function ProductInfo() {
                             <h3>Brand:
                             {productInfo?.variant?.product?.brand} </h3>
                             <h3>Size:
-                                    <Select value={selectedStock} onChange={handleStockChange} disable>
+                                    <Select value={selectedStock} onChange={handleStockChange}>
                                         {productSize.map(stockItem => (
                                             <MenuItem key={stockItem} value={stockItem}>
                                                 {stockItem}
