@@ -1,17 +1,26 @@
 import React, { useState , useEffect } from "react"
-import { Button, Container, Grid, Box, Typography } from "@mui/material";
+import { Button, Container, Grid, Box, Typography, MenuItem, Select } from "@mui/material";
 import Header from "../components/Header";
 import DisplayProducts from "../components/DisplayProducts/DisplayProducts";
 import { getProductInfo} from "../api/products/productRoutes";
 import { useParams, Link, useNavigate } from 'react-router-dom';    
+
+const productSize = [
+    "XS",
+    "S",
+    "M",
+    "L",
+    "XL",
+
+]
 
 export default function ProductInfo() {
 
     const {productId} = useParams();
     
     const [productInfo, setProductInfo]= useState(null)
+    const [selectedStock, setSelectedStock]= useState("")
 
-    const navigate = useNavigate()
    
     useEffect(() => {
         async function getInfo() {
@@ -26,11 +35,15 @@ export default function ProductInfo() {
         }
             getInfo()
 
-    }, [])
+    }, [productId])
     
         if (!productInfo)
             return <h3> Product not available </h3>
-    
+        
+        const handleStockChange = (event) => {
+        setSelectedStock(event.target.value)
+    };
+
 
     return (
         <Container maxWidth={false} sx={{ maxWidth: 1400, paddingTop: "95px", textAlign: 'left'  }}>
@@ -39,7 +52,7 @@ export default function ProductInfo() {
                 {/* { productInfo ?  : <h3> Product not available </h3>} */}
 
                 <section>
-                    <h2 style={{ textAlign: 'left' }}>Product Information</h2>
+                    <h2 style={{ textAlign: 'left' }}>Product Detail Information</h2>
 
                     <Grid container columnSpacing={4} marginTop={3}>
                         <Grid item xs={12} md={6}> 
@@ -53,15 +66,34 @@ export default function ProductInfo() {
                             {/* --> Product Description divide by Boxes
                             --> include button to buy --> not authen  */}
                             <Typography variant="h6" gutterBottom>
-                            Description
-                            {productInfo?.variant?.product?.brand}
+                            <h3> Description:
+                            {productInfo?.variant?.product?.description} </h3>
+                            <h3>Brand:
+                            {productInfo?.variant?.product?.brand} </h3>
+                            <h3>Size:
+                                    <Select value={selectedStock} onChange={handleStockChange} disable>
+                                        {productSize.map(stockItem => (
+                                            <MenuItem key={stockItem} value={stockItem}>
+                                                {stockItem}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
 
-                           <Grid container >
+                            </h3>
+                            <h3>Quantity:
+                            {productInfo?.variant?.product?.stock} </h3>
+                            
+                    
+                    
+                            <h3>Price:
+                            ${productInfo?.variant?.price?.value} </h3>
+
+                           <h3> Colors: <Grid container >
                             {productInfo?.colors.map(colorInfo => <Grid item> 
-                                <Link onClick={()=> navigate(0)} to= {"/product/" + colorInfo._id} > <img src={colorInfo?.assets?.thumbnail} width="30px"/>
+                                <Link to= {"/product/" + colorInfo._id} > <img src={colorInfo?.assets?.thumbnail} width="30px"/>
                                 </Link>
                                 </Grid>)}
-                            </Grid>
+                            </Grid> </h3>
 
                         </Typography>
                             <Button variant="contained" color="primary">
