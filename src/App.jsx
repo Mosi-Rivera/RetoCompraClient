@@ -11,6 +11,7 @@ import SearchProduct from './pages/SearchProduct'
 import CheckoutForm from './pages/CheckoutForm';
 
 import Layout from './components/Layout';
+import ProductInfo from './pages/ProductInfo'
 import PageNotFound from './pages/PageNotFound';
 
 
@@ -28,7 +29,7 @@ function App() {
               <Route path='/women' element={<Women />} />
               <Route path='/search/:searchText' element={<SearchProduct />} />
               <Route path='/checkout' element={<CheckoutForm />} />
-              {/* <Route path= "/Crud" element={<CrudProducts/>} /> */}
+              <Route path='/product/:productId' element={<ProductInfo />} />
             </Route>
             <Route path='*' element={<PageNotFound />} />
           </Routes>
