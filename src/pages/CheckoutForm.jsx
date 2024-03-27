@@ -3,12 +3,10 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Grid, MenuItem, Select } from "@mui/material";
-import Header from "../components/Header";
 import Countries from "../components/Countries";
 import { checkout } from "../api/checkoutRoutes";
-import { CheckoutModal } from "../components/Modal/Modal";
-import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
+import CheckoutModal from "../components/Modal/CheckoutModal";
+import { postcodeValidator, postcodeValidatorExistsForCountry } from 'postcode-validator';
 
 
 const defaultErrorState = { server: "", streetAddress: "", state: "", city: "", zipCode: "" };
@@ -22,17 +20,17 @@ export default function CheckoutForm() {
 
   const [userDeliveryInfo, setDeliveryInfo] = useState(defaultDeliveryInfo)
 
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: "29rem",
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
+  // const style = {
+  //   // position: 'absolute',
+  //   top: '50%',
+  //   left: '50%',
+  //   transform: 'translate(-50%, -50%)',
+  //   width: "29rem",
+  //   bgcolor: 'background.paper',
+  //   border: '2px solid #000',
+  //   boxShadow: 24,
+  //   p: 4,
+  // };
 
   const [errorMessage, setErrorMessage] = useState(defaultErrorState)
 
@@ -59,7 +57,16 @@ export default function CheckoutForm() {
         city: userDeliveryInfo.city === "" ? "This field is required" : "",
         zipCode: userDeliveryInfo.zipCode === "" ? "This field is required" : "",
       })
-    handleOpen()
+
+    const isZipCodeValid = postcodeValidator(userDeliveryInfo.zipCode, 'US');
+
+    if (!isZipCodeValid) {
+      return setErrorMessage({ ...defaultErrorState, zipCode: "Enter a valid ZIP Code" })
+    } else {
+      handleOpen()
+      return setErrorMessage(defaultErrorState)
+    }
+
   }
 
   const handleSubmit = async (event) => {
@@ -67,8 +74,9 @@ export default function CheckoutForm() {
     try {
       const deliveryInfo = await checkout(userDeliveryInfo)
       console.log(deliveryInfo)
-      handleClose()
+
     } catch (error) {
+      handleClose()
       console.log(error)
       //  ***revisit to see if this is the best way to handle the error message from the server***
       //    if (error.status === 400) {
@@ -148,13 +156,14 @@ export default function CheckoutForm() {
         <Button onClick={handleClick} variant="contained">Submit</Button>
 
         {modalOpen && (<CheckoutModal
+          open={modalOpen}
           onSubmit={handleSubmit}
           onCancel={handleClose}
           onClose={handleClose}
           deliveryInfo={userDeliveryInfo}
-          style={style}>
+        // style={style}
+        >
         </CheckoutModal>)}
-
       </Box >
     </>
   )
