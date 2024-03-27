@@ -8,6 +8,7 @@ import Men from './pages/Men';
 import Women from './pages/Women';
 import SearchProduct from './pages/SearchProduct'
 import Layout from './components/Layout';
+import ProductInfo from './pages/ProductInfo'
 import PageNotFound from './pages/PageNotFound';
 
 
@@ -23,6 +24,7 @@ function App() {
               <Route path='/men' element={<Men />} />
               <Route path='/women' element={<Women />} />
               <Route path='/search/:searchText' element={<SearchProduct />} />
+              <Route path='/product/:productId' element={<ProductInfo />} />
             </Route>
             <Route path='*' element={<PageNotFound/>}/>
           </Routes>
