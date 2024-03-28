@@ -73,7 +73,7 @@ export default function CheckoutForm() {
     event.preventDefault()
     try {
       const deliveryInfo = await checkout(userDeliveryInfo)
-      console.log(deliveryInfo)
+      // console.log(deliveryInfo)
 
     } catch (error) {
       handleClose()

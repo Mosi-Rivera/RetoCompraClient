@@ -16,7 +16,7 @@ describe("Form Modal Component", () => {
             handleClose,
             handleOpen
         }
-        useEffect(() => console.log(open), [open]);
+        
         return <Modal id="modal" {...attrs} {...methods} open={open}>
             <form data-testid="form">
                 <input data-testid="email" type="email" name="email" id="email" placeholder='email'/>
